@@ -1,0 +1,4 @@
+
+    /******************************* (ninth Task) **************************************************/
+    🧩 Task 9: Propagate Exception
+    Create a method that throws an exception and another method that calls it. Demonstrate how exceptions propagate.

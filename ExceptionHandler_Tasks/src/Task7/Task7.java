@@ -17,6 +17,5 @@ public class Task7 {
         catch (Exception e){
             System.out.println(e.getMessage());
         }
-
     }
 }
