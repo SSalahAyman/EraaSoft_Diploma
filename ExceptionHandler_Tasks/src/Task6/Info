@@ -1,0 +1,4 @@
+
+    /******************************* (Sixth Task) **************************************************/
+    🧩 Task 6: Multiple Catch Blocks
+    Write a program that may throw both NullPointerException and ArithmeticException. Use multiple catch blocks.
