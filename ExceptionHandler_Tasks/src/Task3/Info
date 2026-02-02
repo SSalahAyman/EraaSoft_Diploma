@@ -1,0 +1,4 @@
+
+    /******************************* (Third Task) **************************************************/
+    🧩 Task 3: Null Pointer
+    Create a method that calls toUpperCase() on a string. Pass null and handle NullPointerException.
