@@ -1,0 +1,4 @@
+
+    /******************************* (twelve Task) **************************************************/
+    🧩 Task 12: Nested Try-Catch
+    Use nested try-catch blocks where inner block causes ArithmeticException and outer catches it.
