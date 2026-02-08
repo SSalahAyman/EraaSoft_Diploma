@@ -1,0 +1,12 @@
+
+    /******************************* (IntermediateStreamTasks) **************************************************/
+    🧩 IntermediateStreamTasks :-
+    (1) Count the number of strings longer than 5 characters.
+
+    (2) Find the first element in a stream that matches a given condition.
+
+    (3) Check if any number is divisible by 5 in a list.
+
+    (4) Collect elements into a Set instead of a List.
+
+    (5) Skip the first 3 elements and return the rest.
