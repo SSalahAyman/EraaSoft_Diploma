@@ -1,0 +1,12 @@
+
+    /******************************* (Advanced Operations) **************************************************/
+    🧩 Advanced Operations :-
+    (1) Sort a list of employees by salary then by name.
+
+    (2) Find the second highest number in a list.
+
+    (3) Find duplicate elements in a list of integers.
+
+    (4) Remove null or empty strings from a list using stream.
+
+    (5) Partition students into pass/fail groups based on grade.

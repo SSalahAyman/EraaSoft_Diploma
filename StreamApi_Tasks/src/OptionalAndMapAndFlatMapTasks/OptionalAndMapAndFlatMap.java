@@ -22,7 +22,7 @@ public class OptionalAndMapAndFlatMap {
         // before doing flatten , we do filter remove any null & " " from
         Set<Character> uniqueChars=names.stream().filter(name->name!=null && !name.isEmpty()).flatMap(name->
              name.chars().mapToObj(c -> (char)c)  // to convert every name to stream<Character>
-        ).collect(Collectors.toSet()); // here collect all streamChar into a set & remove anyDuplicated character
+        ).collect(Collectors.toSet()); // here collect all streamChar into a set to remove anyDuplicated character
         System.out.println(uniqueChars);
 
         /********************************************************** Task (3) *****************************************************************/
@@ -37,8 +37,8 @@ public class OptionalAndMapAndFlatMap {
         // Filter non-empty Optionals and collect values
         List<String> nonEmptyValues = optionalList.stream()
                 .filter(v->v.isPresent())
-                .map(v->v.get())                    // نحصل على القيمة داخل الـ Optional
-                .collect(Collectors.toList());         // نجمعهم في List
+                .map(v->v.get())
+                .collect(Collectors.toList());
         System.out.println(nonEmptyValues);
 
         /********************************************************** Task (4) *****************************************************************/
