@@ -1,0 +1,12 @@
+
+    /******************************* (Collectors & Grouping) **************************************************/
+    🧩 Collectors & Grouping :-
+    (1) Group a list of students by their department.
+
+    (2) Partition a list of numbers into even and odd using partitioningBy.
+
+    (3) Create a comma-separated string from a list of strings.
+
+    (4) Group employees by age and count how many per age.
+
+    (5) Find the average salary per department in a list of employees.

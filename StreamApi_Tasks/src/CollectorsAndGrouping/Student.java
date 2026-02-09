@@ -1,3 +1,5 @@
+package CollectorsAndGrouping;
+
 public class Student {
     String name;
     String department;
