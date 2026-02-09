@@ -1,0 +1,12 @@
+
+    /******************************* (Optional, Map, FlatMap) **************************************************/
+    🧩 Optional, Map, FlatMap :-
+    (1) Flatten a list of lists into a single list.
+
+    (2) Extract all unique characters from a list of words.
+
+    (3) Filter a list of Optionals and collect non-empty values.
+
+    (4) Map a list of strings to their lengths.
+
+    (5) Return a list of uppercased words that start with “A”.
