@@ -1,0 +1,12 @@
+
+    /******************************* (Numeric Streams & Reductions) **************************************************/
+    🧩 Numeric Streams & Reductions :-
+    (1) Calculate the sum of a list of integers using reduce.
+
+    (2) Find the maximum and minimum value in a list.
+
+    (3) Calculate the average of a list of doubles.
+
+    (4) Multiply all integers in a list together using reduce.
+
+    (5) Count how many numbers are positive in a list.
