@@ -25,5 +25,11 @@ CREATE TABLE Owner AS SELECT id, full_name name, birth_date FROM Manager;
 -- rename manger table name to Master
 ALTER TABLE Manager RENAME TO Master;
 
-SELECT * FROM Manager;
+-- drop all tables     
+DROP TABLE Master;
+DROP TABLE Owner;
+
+
+-- used it only to view the two tables after every change
+SELECT * FROM Master;
 SELECT * FROM Owner;
