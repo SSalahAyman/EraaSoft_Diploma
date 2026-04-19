@@ -37,10 +37,10 @@ SELECT * FROM employees ORDER BY hire_date DESC;
 SELECT * FROM employees ORDER BY DEPARTMENT_ID ASC , SALARY DESC;
 
 -- 14. Retrieve all employees with their last_name in lowercase
-
+SELECT EMPLOYEE_ID , FIRST_NAME, LOWER(LAST_NAME) AS LAST_NAME_LOWER , EMAIL FROM employees ;
 
 -- 15. Retrieve all employees with their first_name in uppercase.
-
+SELECT EMPLOYEE_ID , UPPER(FIRST_NAME) AS FIRST_NAME_UPPER , LAST_NAME , EMAIL FROM employees;
 
 -- 16. Retrieve all employees with their first_name and last_name in title case (first letter capitalized).
 
