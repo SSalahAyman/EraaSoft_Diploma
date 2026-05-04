@@ -30,3 +30,8 @@ CREATE TABLE Doctar_Patient(
 	CONSTRAINT  Patient_id_fk FOREIGN KEY (Patient_id) REFERENCES Patient(id),
 	CONSTRAINT  comp_un_fk UNIQUE (Doctar_id,Patient_id)
 );
+
+
+DROP TABLE Doctar;
+DROP TABLE Patient;
+DROP TABLE Doctar_Patient;
