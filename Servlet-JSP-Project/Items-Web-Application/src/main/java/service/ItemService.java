@@ -18,6 +18,6 @@ public interface ItemService {
 	
 	boolean updateitem(Item item);
 	
-	boolean deleteItem(Item item);  //
+	boolean deleteItem(Integer id);  //
 
 }

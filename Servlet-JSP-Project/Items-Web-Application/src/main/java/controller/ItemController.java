@@ -74,7 +74,6 @@ public class ItemController extends HttpServlet {
 		try {
 			request.getRequestDispatcher("/show-items.jsp").forward(request, response);   // here must do try/catch here because the path that we put can be not found 
 		} catch (ServletException | IOException e) {
-			
 			System.out.println("Exception " + e.getMessage());
 		}
 		// TODO : code that send the list of items to front-end page to showing it in browser
@@ -99,9 +98,28 @@ public class ItemController extends HttpServlet {
 	}
 
 
-
+	
 	private void deleteItem(HttpServletRequest request, HttpServletResponse response) {
-		boolean isDeleted = itemService.deleteItem();
+		
+		try {
+
+			Integer id = Integer.parseInt(request.getParameter("id"));
+
+	        boolean isItemDeleted = itemService.deleteItem(id);
+
+	        if(isItemDeleted) {
+
+	            response.sendRedirect( "/Items-Web-Application/ItemController?action=show-items");
+
+	        } else {
+
+	            System.out.println("Delete failed");
+	        }
+
+	    } catch (Exception e) {
+
+	        System.out.println("Exception " + e.getMessage());
+	    }
 		
 	}
 

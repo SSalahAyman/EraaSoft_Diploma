@@ -13,8 +13,8 @@ public interface ItemRepo {
 	
 	void saveItem(Item item);
 	
-	ResultSet updateItem(Item item);
+	boolean updateItem(Item item);
 	
-	boolean deleteItem(Item item);  //
+	boolean deleteItem(Integer id);  //
 	
 }

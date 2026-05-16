@@ -47,9 +47,9 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public boolean deleteItem(Item item) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deleteItem(Integer id) {
+		boolean isItemDeleted = itemRepo.deleteItem(id);
+		return isItemDeleted;
 	}
 
 }

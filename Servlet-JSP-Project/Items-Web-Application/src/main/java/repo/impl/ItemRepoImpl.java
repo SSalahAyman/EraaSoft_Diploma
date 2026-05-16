@@ -77,14 +77,35 @@ public class ItemRepoImpl implements ItemRepo {
 	}
 
 	@Override
-	public ResultSet updateItem(Item item) {
+	public boolean updateItem(Item item) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override
-	public boolean deleteItem(Item item) {
-		// TODO Auto-generated method stub
+	public boolean deleteItem(Integer id) {
+		Connection connection = null;
+		Statement statement = null;
+		
+		 try {
+			connection = DBConfig.getConnection();
+			String query = "DELETE FROM ITEM WHERE ID = " + id;
+			statement = connection.createStatement();
+			statement.execute(query);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (Objects.nonNull(connection)) {
+				try {
+					connection.close();
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+		}
 		return false;
 	}
 
