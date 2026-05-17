@@ -13,6 +13,7 @@ import model.Item;
 import repo.ItemRepo;
 import repo.impl.ItemRepoImpl;
 import service.ItemService;
+import util.InputValidator;
 
 public class ItemServiceImpl implements ItemService {
 	
@@ -29,27 +30,35 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public Item selectItem(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Item selectItem(Integer id) {
+		Item item = itemRepo.selectItemById(id);
+		return item;
 	}
 
 	@Override
 	public boolean saveItem(Item item) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean isValidInputs = InputValidator.isValidateAddItemInputs(item);
+		
+		if(!isValidInputs) {
+			return false;
+		}
+		return itemRepo.saveItem(item);
+		
 	}
 
 	@Override
 	public boolean updateitem(Item item) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean isValidInputs = InputValidator.isValidateUpdateitemInputs(item);
+		
+		if(!isValidInputs) {
+			return false;
+		}
+		return itemRepo.updateItem(item);
 	}
 
 	@Override
 	public boolean deleteItem(Integer id) {
-		boolean isItemDeleted = itemRepo.deleteItem(id);
-		return isItemDeleted;
+		return itemRepo.deleteItem(id);
 	}
 
 }

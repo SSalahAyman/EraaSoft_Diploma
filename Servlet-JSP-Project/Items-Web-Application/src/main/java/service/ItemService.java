@@ -12,7 +12,7 @@ public interface ItemService {
 	
 	List<Item> getAllItems();
 	
-	Item selectItem(Long id);
+	Item selectItem(Integer id);
 	
 	boolean saveItem(Item item);
 	

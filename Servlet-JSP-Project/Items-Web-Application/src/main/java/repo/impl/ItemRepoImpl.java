@@ -1,6 +1,7 @@
 package repo.impl;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -39,8 +40,9 @@ public class ItemRepoImpl implements ItemRepo {
 			String query = "SELECT * FROM ITEM";
 			ResultSet resultSet = statement.executeQuery(query);
 			
+			Item item = null;
 			while(resultSet.next()) {
-				Item item = new Item(
+				  item = new Item(
 						resultSet.getInt("ID"),
 						resultSet.getString("NAME"),
 						resultSet.getDouble("PRICE"),
@@ -65,41 +67,128 @@ public class ItemRepoImpl implements ItemRepo {
 	}
 
 	@Override
-	public ResultSet selectItemById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Item selectItemById(Integer id) {
+		Connection connection = null; 
+		PreparedStatement preparedStatement = null;
+		try {
+			connection = DBConfig.getConnection();
+			String query = "SELECT * FROM ITEM WHERE ID = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+	// here we do if-else instead of while loop because the resultSet here is only have one row because I want to select rows that id = ? , and the id is primaryKey ,So it is unique and not-duplicated
+			Item item = null;
+			if (resultSet.next()) {  
+				item = new Item(
+						resultSet.getInt("ID"),
+						resultSet.getString("NAME"),
+						resultSet.getDouble("PRICE"),
+						resultSet.getInt("TOTAL_NUMBER")
+				);
+			}
+			 return item;
+		} catch (Exception e) {
+			System.out.println("Exception " + e.getMessage());
+		} finally {
+			if (Objects.nonNull(connection)) {
+				try {
+					connection.close();
+					preparedStatement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		 return null;   // when the function return this null is mean that is problem appear here after executing the catch
 	}
 
 	@Override
-	public void saveItem(Item item) {
-		// TODO Auto-generated method stub
+	public boolean saveItem(Item item) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
 		
+		try {
+			connection = DBConfig.getConnection();
+			String query = "INSERT INTO ITEM (NAME, PRICE, TOTAL_NUMBER) VALUES (?,?,?)";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, item.getName());
+			preparedStatement.setDouble(2,item.getPrice());
+			preparedStatement.setDouble(3,item.getTotalNumber());
+			int rowsAffected = preparedStatement.executeUpdate();
+			return rowsAffected == 1;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (Objects.nonNull(connection)) {
+				try {
+					connection.close();
+					preparedStatement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override
 	public boolean updateItem(Item item) {
-		// TODO Auto-generated method stub
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try {
+			connection = DBConfig.getConnection();
+			String query = "UPDATE ITEM SET NAME = ?, PRICE = ?, TOTAL_NUMBER = ? WHERE id = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, item.getName());
+			preparedStatement.setDouble(2,item.getPrice());
+			preparedStatement.setDouble(3,item.getTotalNumber());
+			preparedStatement.setDouble(4,item.getId());
+			int rowsAffected = preparedStatement.executeUpdate();
+			return rowsAffected > 0;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (Objects.nonNull(connection)) {
+				try {
+					connection.close();
+					preparedStatement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public boolean deleteItem(Integer id) {
 		Connection connection = null;
-		Statement statement = null;
+		PreparedStatement preparedStatement = null;
 		
 		 try {
 			connection = DBConfig.getConnection();
-			String query = "DELETE FROM ITEM WHERE ID = " + id;
-			statement = connection.createStatement();
-			statement.execute(query);
-			return true;
+			
+			String query = "DELETE FROM ITEM WHERE ID = ?";
+			
+			preparedStatement = connection.prepareStatement(query);
+			
+			preparedStatement.setInt(1,id);
+			
+			int rowsAffected = preparedStatement.executeUpdate();  // this return the number of rows that is effected with the query
+			
+			return rowsAffected > 0;  // so here if number > 0 that mean there is already rows deleted that is matching with the specific id
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			if (Objects.nonNull(connection)) {
 				try {
 					connection.close();
-					statement.close();
+					preparedStatement.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

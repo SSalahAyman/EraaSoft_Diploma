@@ -9,9 +9,9 @@ public interface ItemRepo {
 	
 	List<Item> getAllItems(); //
 	
-	ResultSet selectItemById(long id);
+	Item selectItemById(Integer id);
 	
-	void saveItem(Item item);
+	boolean saveItem(Item item);
 	
 	boolean updateItem(Item item);
 	

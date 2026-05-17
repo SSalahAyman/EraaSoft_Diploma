@@ -287,7 +287,7 @@
             <td><%= item.getTotalNumber() %></td>
         	<td>
    <% // here after user do update on any item , the request is go to the item controller with having action parameter = "show-item" & id parameter with id of item that we needed to update it %>
-        		<a href =" ">Update</a> 
+        		<a href ="/Items-Web-Application/ItemController?action=show-item&id=<%= item.getId()%>">Update</a> 
         		<a href = "/Items-Web-Application/ItemController?action=delete-item&id=<%= item.getId()%>">Delete</a>
         	</td>
         </tr>
@@ -299,7 +299,7 @@
     </table>
 
 
-    <button class="f"><a href="" >Add Item</a></button>
+    <button class="f"><a href="add-item.html" >Add Item</a></button>
 
 
 </div>

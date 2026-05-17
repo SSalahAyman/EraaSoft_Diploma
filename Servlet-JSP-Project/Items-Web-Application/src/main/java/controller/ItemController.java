@@ -81,19 +81,86 @@ public class ItemController extends HttpServlet {
 
 
 	private void showItem(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+		
+		Integer id = Integer.parseInt(request.getParameter("id"));
+		
+		Item item = itemService.selectItem(id);
+		
+		if(Objects.nonNull(item)) {  // if item is "non null" that is mean there is a row it is selected or returned from the Database , so save it in attribute to send to update-item page when you request it
+			request.setAttribute("itemSelected", item);
+			
+			try {
+				request.getRequestDispatcher("/update-item.jsp").forward(request, response);
+			} catch(ServletException | IOException e){
+				System.out.println("Exception " + e.getMessage());
+			}
+		} else {
+			try {
+				request.getRequestDispatcher("item-not-found.html").forward(request, response);
+			} catch(ServletException | IOException e){
+				System.out.println("Exception " + e.getMessage());
+			}
+		}
+		
+		
+		
+		
 		
 	}
 
 	
 	private void addItem(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+		try {
+			String name = request.getParameter("itemName");
+			double price =Double.parseDouble(request.getParameter("itemPrice"));
+			Integer totalNumber = Integer.parseInt(request.getParameter("itemTotalNumber"));
+			
+			Item item = new Item(name,price,totalNumber);
+			
+			boolean isItemAdded = itemService.saveItem(item);
+			
+			if(isItemAdded) {
+		        response.sendRedirect("/Items-Web-Application/ItemController?action=show-items");
+ // execute else when your data causes the validation is failed such as when user enter name = "" , price = -50 , so the isItemAdded is false so execute else block , so the else mean the program success running but the data not corrected
+			} else {  
+				request.setAttribute("error message", "Invalid item data");
+				// here return again to the add-item page with request has error message
+				request.getRequestDispatcher("/add-item.html").forward(request, response);
+			}
+		} catch (Exception e) {  // the method execute catch when the the error has appear During execution. such as in (Double.parseDouble) when user enter "abc" so this line has throw "NumberFormatException"
+			System.out.println("Exception " + e.getMessage());
+
+		}
 		
 	}
 
 
 	private void updateItem(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+		
+		try {
+			
+			Integer id = Integer.parseInt(request.getParameter("id"));
+			String name = request.getParameter("itemName");
+			double price = Double.parseDouble(request.getParameter("itemPrice"));
+			Integer totalNumber = Integer.parseInt(request.getParameter("itemTotalNumber")); 
+			
+			Item item = new Item (id, name,price,totalNumber);
+			
+			boolean itItemUpdated = itemService.updateitem(item);
+			
+			if(itItemUpdated) {
+				response.sendRedirect( "/Items-Web-Application/ItemController?action=show-items");
+			} else {
+				try {
+					request.getRequestDispatcher("item-not-found.html").forward(request, response);
+				} catch(ServletException | IOException e){
+					System.out.println("Exception " + e.getMessage());
+				}
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Exception " + e.getMessage());
+		}
 		
 	}
 
