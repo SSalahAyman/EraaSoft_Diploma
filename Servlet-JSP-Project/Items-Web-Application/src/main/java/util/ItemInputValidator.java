@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import model.Item;
 
-public class InputValidator {
+public class ItemInputValidator {
 	
 	public static boolean isValidateAddItemInputs(Item item) {
 		

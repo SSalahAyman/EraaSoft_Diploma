@@ -37,7 +37,7 @@ public class ItemController extends HttpServlet {
 		
 		String action = request.getParameter("action");
 		
-		if(Objects.isNull(action)) {  // here is the request that is send to the controller without value for action parameter , then
+		if(Objects.isNull(action)) {  
 			action="show-items";
 		}
 // here if the action that send from user when calling this ItemController is "show-items" , then go to the showItems method and doing the business logic that is showing all items to user on the browser

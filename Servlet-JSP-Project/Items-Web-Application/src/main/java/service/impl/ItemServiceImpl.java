@@ -13,7 +13,7 @@ import model.Item;
 import repo.ItemRepo;
 import repo.impl.ItemRepoImpl;
 import service.ItemService;
-import util.InputValidator;
+import util.ItemInputValidator;
 
 public class ItemServiceImpl implements ItemService {
 	
@@ -37,7 +37,7 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public boolean saveItem(Item item) {
-		boolean isValidInputs = InputValidator.isValidateAddItemInputs(item);
+		boolean isValidInputs = ItemInputValidator.isValidateAddItemInputs(item);
 		
 		if(!isValidInputs) {
 			return false;
@@ -48,7 +48,7 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public boolean updateitem(Item item) {
-		boolean isValidInputs = InputValidator.isValidateUpdateitemInputs(item);
+		boolean isValidInputs = ItemInputValidator.isValidateUpdateitemInputs(item);
 		
 		if(!isValidInputs) {
 			return false;
