@@ -21,7 +21,7 @@ public class AuthController extends HttpServlet {
    AuthService authService = new AuthServiceImpl();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 				doPost(request, response);
 	}
 
@@ -31,7 +31,7 @@ public class AuthController extends HttpServlet {
 		String action = request.getParameter("action");
 		
 		if(Objects.isNull(action)) {  
-			action="login";
+			action="signup";
 		}
 		
 		switch(action) {

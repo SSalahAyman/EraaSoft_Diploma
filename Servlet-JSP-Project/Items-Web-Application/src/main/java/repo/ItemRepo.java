@@ -1,13 +1,12 @@
 package repo;
 
-import java.sql.ResultSet;
 import java.util.List;
 
 import model.Item;
 
 public interface ItemRepo {
 	
-	List<Item> getAllItems(); //
+	List<Item> getAllItems(); 
 	
 	Item selectItemById(Integer id);
 	
@@ -15,6 +14,6 @@ public interface ItemRepo {
 	
 	boolean updateItem(Item item);
 	
-	boolean deleteItem(Integer id);  //
+	boolean deleteItem(Integer id);  
 	
 }

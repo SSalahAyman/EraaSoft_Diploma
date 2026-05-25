@@ -2,21 +2,28 @@ package service.impl;
 
 import java.sql.SQLException;
 
+import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 
+import exceptions.InvalidCredentialsException;
+import exceptions.MissingMandatoryField;
+import exceptions.PasswordMismatchException;
+import exceptions.UserAlreadyExistsException;
+import exceptions.ValidationException;
 import model.User;
 import repo.UserRepo;
 import repo.impl.UserRepoImpl;
 import service.AuthService;
+import util.LoginValidator;
 import util.SignupValidator;
-import util.ValidationResult;
+
 
 public class AuthServiceImpl implements AuthService {
 	
-	UserRepo userRepo = new UserRepoImpl();
+	private UserRepo userRepo = new UserRepoImpl();
 
 	@Override
-	public ValidationResult signup(HttpServletRequest request) {
+	public void signup(HttpServletRequest request) throws MissingMandatoryField,PasswordMismatchException,ValidationException,NamingException, SQLException {
 		String userName= request.getParameter("username");
 		
 		String password = request.getParameter("password");
@@ -24,35 +31,46 @@ public class AuthServiceImpl implements AuthService {
 		String confirmPassword = request.getParameter("confirmPassword");
 		
 		// validation
-		ValidationResult validationResult = SignupValidator.validateSignupInputs(userName, password, confirmPassword);
-		
-	  // this mean if this condition acheives that mean the validation on inputs of signin is failed , so return the validationResult that contain boolean flag and message error to Auth controller
-		if (!validationResult.isValid()) {  
-			return validationResult;
-		}
+		SignupValidator.validateSignupInputs(userName, password, confirmPassword);
 		
 		// create user object with the input data after validation is successed
 		User user = new User(userName,password);
 		
 		// create account with this userObject and with checking on the userName is already exists or not before
-		
 		try {
-			boolean isUserCreated = userRepo.createAccount(user);
-			if (isUserCreated) {
-				return new ValidationResult(true,"SignupSuccess");
-			}
+			userRepo.createAccount(user);
+			
 		} catch (SQLException e) {
-			 // Oracle UNIQUE constraint if is not achieved
-			if(e.getErrorCode() == 1) {
-
-	            return new ValidationResult(false,"Username already exists");
-	        }
-
-	        e.printStackTrace();
+			
+			// ORACLE UNIQUE CONSTRAINT
+			if (e.getErrorCode() == 1) {
+				throw new UserAlreadyExistsException();			
+			}
+			
+			throw e;
 		}
 		
 		
-		return new ValidationResult(false,"Signup failed");
+	}
+
+	@Override
+	public User login(HttpServletRequest request) throws NamingException, SQLException, MissingMandatoryField {
+		
+		String userName = request.getParameter("username");
+		
+		String password = request.getParameter("password");
+		
+		// validation
+		LoginValidator.validateLoginInputs(userName, password);
+		
+		User receivedUser = userRepo.login(userName, password);
+		
+		if (receivedUser == null) {
+			throw new InvalidCredentialsException();
+		}
+		
+		return receivedUser;
+		
 	}
 
 }

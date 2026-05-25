@@ -1,13 +1,17 @@
 package service;
 
+import java.sql.SQLException;
+
+import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 
-import util.ValidationResult;
+import model.User;
+
 
 public interface AuthService {
 	
-	ValidationResult signup(HttpServletRequest request); 
+	void signup(HttpServletRequest request) throws SQLException, NamingException ; 
 	
-	
+	User login(HttpServletRequest request) throws SQLException, NamingException ;
 
 }

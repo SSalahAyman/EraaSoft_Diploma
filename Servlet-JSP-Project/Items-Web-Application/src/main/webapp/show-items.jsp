@@ -6,303 +6,445 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>show-items</title>
-	<style>/* Reset and base styles */
-	* {
-	    margin: 0;
-	    padding: 0;
-	    box-sizing: border-box;
-	}
-	
-	body {
-	    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-	    min-height: 100vh;
-	    display: flex;
-	    justify-content: center;
-	    align-items: center;
-	    padding: 20px;
-	}
-	
-	/* Layer container */
-	.layer {
-	    background: rgba(255, 255, 255, 0.95);
-	    border-radius: 20px;
-	    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-	    padding: 40px;
-	    max-width: 1200px;
-	    width: 100%;
-	    backdrop-filter: blur(10px);
-	    border: 1px solid rgba(255, 255, 255, 0.2);
-	}
-	
-	/* Table heading */
-	h1 {
-	    text-align: center;
-	    color: #333;
-	    margin-bottom: 30px;
-	    font-size: 2.8rem;
-	    font-weight: 700;
-	    background: linear-gradient(45deg, #667eea, #764ba2);
-	    -webkit-background-clip: text;
-	    -webkit-text-fill-color: transparent;
-	    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	}
-	
-	/* Table styles */
-	table {
-	    width: 100%;
-	    border-collapse: separate;
-	    border-spacing: 0;
-	    margin-bottom: 40px;
-	    overflow: hidden;
-	    border-radius: 15px;
-	    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-	}
-	
-	/* Table header */
-	thead {
-	    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-	}
-	
-	thead tr th {
-	    color: white;
-	    font-weight: 600;
-	    text-transform: uppercase;
-	    letter-spacing: 1px;
-	    font-size: 0.95rem;
-	    padding: 20px 15px;
-	    text-align: left;
-	    border-bottom: none;
-	}
-	
-	/* Table body */
-	tbody tr {
-	    transition: all 0.3s ease;
-	    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-	}
-	
-	tbody tr:nth-child(even) {
-	    background-color: rgba(102, 126, 234, 0.05);
-	}
-	
-	tbody tr:hover {
-	    background-color: rgba(102, 126, 234, 0.1);
-	    transform: translateY(-2px);
-	    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-	}
-	
-	tbody td {
-	    padding: 18px 15px;
-	    color: #555;
-	    font-size: 0.95rem;
-	    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-	}
-	
-	tbody td:first-child {
-	    border-left: 4px solid transparent;
-	    transition: border-left-color 0.3s ease;
-	}
-	
-	tbody tr:hover td:first-child {
-	    border-left-color: #667eea;
-	}
-	
-	/* Strong text in first column */
-	td strong {
-	    color: #333;
-	    font-weight: 600;
-	    font-size: 1rem;
-	}
-	
-	/* Action buttons */
-	td a {
-	    display: inline-block;
-	    padding: 8px 18px;
-	    margin-right: 10px;
-	    border-radius: 25px;
-	    text-decoration: none;
-	    font-weight: 500;
-	    font-size: 0.9rem;
-	    transition: all 0.3s ease;
-	    cursor: pointer;
-	    text-transform: uppercase;
-	    letter-spacing: 0.5px;
-	}
-	
-	/* Update button */
-	td a:first-child {
-	    background: linear-gradient(45deg, #4CAF50, #8BC34A);
-	    color: white;
-	    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
-	}
-	
-	td a:first-child:hover {
-	    transform: translateY(-2px);
-	    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
-	}
-	
-	/* Delete button */
-	td a:last-child {
-	    background: linear-gradient(45deg, #f44336, #FF9800);
-	    color: white;
-	    box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
-	}
-	
-	td a:last-child:hover {
-	    transform: translateY(-2px);
-	    box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
-	}
-	
-	/* Add button */
-	.f {
-	    display: block;
-	    margin: 0 auto;
-	    padding: 0;
-	    border: none;
-	    background: none;
-	    cursor: pointer;
-	}
-	
-	.f a {
-	    display: inline-block;
-	    padding: 18px 40px;
-	    background: linear-gradient(45deg, #667eea, #764ba2);
-	    color: white;
-	    text-decoration: none;
-	    border-radius: 50px;
-	    font-weight: 600;
-	    font-size: 1.1rem;
-	    text-transform: uppercase;
-	    letter-spacing: 1px;
-	    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-	    transition: all 0.3s ease;
-	}
-	
-	.f a:hover {
-	    transform: translateY(-3px);
-	    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
-	}
-	
-	.f a:active {
-	    transform: translateY(-1px);
-	}
-	
-	/* Responsive design */
-	@media (max-width: 768px) {
-	    .layer {
-	        padding: 20px;
-	        margin: 10px;
-	    }
-	    
-	    h1 {
-	        font-size: 2rem;
-	        margin-bottom: 20px;
-	    }
-	    
-	    table {
-	        display: block;
-	        overflow-x: auto;
-	    }
-	    
-	    thead tr th,
-	    tbody td {
-	        padding: 12px 8px;
-	        font-size: 0.9rem;
-	    }
-	    
-	    td a {
-	        padding: 6px 12px;
-	        font-size: 0.8rem;
-	        margin-bottom: 5px;
-	        display: block;
-	        width: fit-content;
-	    }
-	    
-	    .f a {
-	        padding: 15px 30px;
-	        font-size: 1rem;
-	    }
-	}
-	
-	/* Animation for table rows */
-	@keyframes fadeIn {
-	    from {
-	        opacity: 0;
-	        transform: translateY(20px);
-	    }
-	    to {
-	        opacity: 1;
-	        transform: translateY(0);
-	    }
-	}
-	
-	tbody tr {
-	    animation: fadeIn 0.5s ease forwards;
-	}
-	
-	tbody tr:nth-child(1) { animation-delay: 0.1s; }
-	tbody tr:nth-child(2) { animation-delay: 0.2s; }
-	tbody tr:nth-child(3) { animation-delay: 0.3s; }
-	tbody tr:nth-child(n+4) { animation-delay: 0.4s; }
-	
-	/* Scrollbar styling */
-	::-webkit-scrollbar {
-	    width: 8px;
-	    height: 8px;
-	}
-	
-	::-webkit-scrollbar-track {
-	    background: rgba(0, 0, 0, 0.05);
-	    border-radius: 10px;
-	}
-	
-	::-webkit-scrollbar-thumb {
-	    background: linear-gradient(45deg, #667eea, #764ba2);
-	    border-radius: 10px;
-	}</style>
+<title>Items Dashboard</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#0f172a,#1e293b,#312e81);
+    background-size:cover;
+    padding:30px;
+    overflow-x:hidden;
+}
+
+/* Navbar */
+
+.navbar{
+    width:100%;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:20px;
+    padding:20px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:35px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.25);
+}
+
+.logo{
+    font-size:1.9rem;
+    font-weight:700;
+    color:white;
+    letter-spacing:1px;
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+/* Buttons */
+
+.add-btn,
+.logout-btn{
+    text-decoration:none;
+    padding:12px 22px;
+    border-radius:14px;
+    font-weight:600;
+    transition:0.3s;
+    color:white;
+}
+
+.add-btn{
+    background:linear-gradient(135deg,#3b82f6,#2563eb);
+    box-shadow:0 10px 20px rgba(37,99,235,0.35);
+}
+
+.logout-btn{
+    background:linear-gradient(135deg,#ef4444,#dc2626);
+    box-shadow:0 10px 20px rgba(220,38,38,0.35);
+}
+
+.add-btn:hover,
+.logout-btn:hover{
+    transform:translateY(-3px);
+}
+
+/* Page Heading */
+
+.page-title{
+    margin-bottom:30px;
+}
+
+.page-title h1{
+    color:white;
+    font-size:2.4rem;
+    margin-bottom:8px;
+    font-weight:700;
+}
+
+.page-title p{
+    color:#cbd5e1;
+    font-size:15px;
+}
+
+/* Items Grid */
+
+.items-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:25px;
+}
+
+/* Item Card */
+
+.card{
+    position:relative;
+    overflow:hidden;
+
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,0.1);
+
+    border-radius:24px;
+
+    padding:28px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,0.25);
+
+    transition:0.35s;
+}
+
+/* Top Gradient Line */
+
+.card::before{
+    content:'';
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:5px;
+    background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+}
+
+.card:hover{
+    transform:translateY(-6px) scale(1.01);
+    box-shadow:0 20px 45px rgba(0,0,0,0.35);
+}
+
+/* Item ID */
+
+.item-id{
+    display:inline-block;
+    background:rgba(59,130,246,0.15);
+    color:#93c5fd;
+
+    padding:7px 14px;
+
+    border-radius:30px;
+
+    font-size:13px;
+    font-weight:600;
+
+    margin-bottom:18px;
+}
+
+/* Item Name */
+
+.card h2{
+    font-size:1.6rem;
+    color:white;
+    margin-bottom:22px;
+    font-weight:600;
+}
+
+/* Item Info */
+
+.info{
+    margin-bottom:18px;
+}
+
+.info span{
+    display:block;
+    color:#cbd5e1;
+    font-size:14px;
+    margin-bottom:6px;
+}
+
+.info strong{
+    color:white;
+    font-size:1.1rem;
+    font-weight:600;
+}
+
+/* Actions */
+
+.actions{
+    margin-top:30px;
+    display:flex;
+    gap:12px;
+}
+
+.actions a{
+    flex:1;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    padding:12px;
+
+    border-radius:14px;
+
+    color:white;
+
+    font-weight:600;
+
+    transition:0.3s;
+}
+
+/* Update Button */
+
+.update-btn{
+    background:linear-gradient(135deg,#10b981,#059669);
+    box-shadow:0 10px 20px rgba(5,150,105,0.3);
+}
+
+/* Delete Button */
+
+.delete-btn{
+    background:linear-gradient(135deg,#ef4444,#dc2626);
+    box-shadow:0 10px 20px rgba(220,38,38,0.3);
+}
+
+.actions a:hover{
+    transform:translateY(-2px);
+}
+
+/* Empty State */
+
+.empty{
+    width:100%;
+
+    background:rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,0.1);
+
+    border-radius:25px;
+
+    padding:60px;
+
+    text-align:center;
+
+    box-shadow:0 10px 30px rgba(0,0,0,0.25);
+}
+
+.empty h2{
+    color:white;
+    margin-bottom:12px;
+    font-size:2rem;
+}
+
+.empty p{
+    color:#cbd5e1;
+    font-size:15px;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+    body{
+        padding:15px;
+    }
+
+    .navbar{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:20px;
+    }
+
+    .nav-right{
+        width:100%;
+        flex-direction:column;
+    }
+
+    .add-btn,
+    .logout-btn{
+        width:100%;
+        text-align:center;
+    }
+
+    .page-title h1{
+        font-size:2rem;
+    }
+
+    .items-container{
+        grid-template-columns:1fr;
+    }
+
+    .actions{
+        flex-direction:column;
+    }
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-track{
+    background:#111827;
+}
+
+::-webkit-scrollbar-thumb{
+    background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+    border-radius:20px;
+}
+
+</style>
+
 </head>
 <body>
-	<div class="layer">
-    <table>
-        <h1>Items</h1>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>NAME</th>
-            <th>PRICE</th>
-            <th>TOTAL_NUMBER</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <%
-        	List<Item> items =(List<Item>) request.getAttribute("allItems");
-        	for(Item item : items){
-        %>
-        <tr>
-        	<td><strong><%= item.getId()%></strong></td>
-        	<td><%= item.getName() %></td>
-            <td><%= item.getPrice() %></td>
-            <td><%= item.getTotalNumber() %></td>
-        	<td>
-   <% // here after user do update on any item , the request is go to the item controller with having action parameter = "show-item" & id parameter with id of item that we needed to update it %>
-        		<a href ="/Items-Web-Application/ItemController?action=show-item&id=<%= item.getId()%>">Update</a> 
-        		<a href = "/Items-Web-Application/ItemController?action=delete-item&id=<%= item.getId()%>">Delete</a>
-        	</td>
-        </tr>
-        <%
-        	}
-        %>	
-        
-        </tbody>
-    </table>
 
+<!-- Navbar -->
 
-    <button class="f"><a href="add-item.html" >Add Item</a></button>
+<div class="navbar">
 
+    <div class="logo">
+        Items App
+    </div>
+
+    <div class="nav-right">
+
+        <a href="/Items-Web-Application/add-Item.html" class="add-btn">
+            + Add Item
+        </a>
+
+        <a href="/Items-Web-Application/AuthController?action=logout"
+           class="logout-btn">
+            Logout
+        </a>
+
+    </div>
 
 </div>
+
+<!-- Page Heading -->
+
+<div class="page-title">
+
+    <h1>Items Dashboard</h1>
+
+    <p>
+        Manage all your items easily
+    </p>
+
+</div>
+
+<!-- Items -->
+
+<div class="items-container">
+
+<%
+    List<Item> items =(List<Item>) request.getAttribute("allItems");
+%>
+
+<%
+    if(items == null || items.isEmpty()){
+%>
+
+<div class="empty">
+
+    <h2>No Items Found</h2>
+
+    <p>
+        Start by adding your first item
+    </p>
+
+</div>
+
+<%
+    }else{
+
+        for(Item item : items){
+%>
+
+<div class="card">
+
+    <div class="item-id">
+        ID #<%= item.getId() %>
+    </div>
+
+    <h2>
+        <%= item.getName() %>
+    </h2>
+
+    <div class="info">
+
+        <span>Price</span>
+
+        <strong>
+            $ <%= item.getPrice() %>
+        </strong>
+
+    </div>
+
+    <div class="info">
+
+        <span>Total Quantity</span>
+
+        <strong>
+            <%= item.getTotalNumber() %>
+        </strong>
+
+    </div>
+
+    <div class="actions">
+
+        <a class="update-btn"
+           href="/Items-Web-Application/ItemController?action=show-item&id=<%= item.getId()%>">
+
+            Update
+
+        </a>
+
+        <a class="delete-btn"
+           href="/Items-Web-Application/ItemController?action=delete-item&id=<%= item.getId()%>">
+
+            Delete
+
+        </a>
+
+    </div>
+
+</div>
+
+<%
+        }
+    }
+%>
+
+</div>
+
 </body>
 </html>
 

@@ -3,9 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<title>Login</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
 
 *{
@@ -16,69 +19,126 @@
 }
 
 body{
-    height:100vh;
+    min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);;
+    background:linear-gradient(135deg,#141e30,#243b55);
     overflow:hidden;
 }
 
-.container{
-    width:420px;
-    background:rgba(255,255,255,0.15);
-    backdrop-filter:blur(15px);
-    border:1px solid rgba(255,255,255,0.2);
-    border-radius:25px;
-    padding:45px;
-    box-shadow:0 10px 40px rgba(0,0,0,0.2);
+.background{
+    position:absolute;
+    width:100%;
+    height:100%;
+    overflow:hidden;
 }
 
-.container h1{
-    text-align:center;
+.background span{
+    position:absolute;
+    display:block;
+    width:200px;
+    height:200px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.05);
+    animation:move 10s linear infinite;
+}
+
+.background span:nth-child(1){
+    top:10%;
+    left:20%;
+}
+
+.background span:nth-child(2){
+    bottom:10%;
+    right:15%;
+}
+
+@keyframes move{
+    0%{
+        transform:translateY(0px) rotate(0deg);
+    }
+    100%{
+        transform:translateY(-40px) rotate(360deg);
+    }
+}
+
+.container{
+    width:900px;
+    height:550px;
+    display:flex;
+    border-radius:30px;
+    overflow:hidden;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(20px);
+    box-shadow:0 25px 50px rgba(0,0,0,0.4);
+    z-index:2;
+}
+
+.left{
+    flex:1;
+    background:linear-gradient(135deg,#6a11cb,#2575fc);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
     color:white;
-    margin-bottom:35px;
-    font-size:2.5rem;
+    padding:40px;
+}
+
+.left h1{
+    font-size:3rem;
+    margin-bottom:20px;
+}
+
+.left p{
+    text-align:center;
+    line-height:1.8;
+    opacity:0.9;
+}
+
+.right{
+    flex:1;
+    background:white;
+    padding:60px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.right h2{
+    margin-bottom:40px;
+    color:#333;
+    font-size:2rem;
 }
 
 .input-box{
     margin-bottom:25px;
 }
 
-.input-box label{
-    display:block;
-    margin-bottom:8px;
-    color:white;
-    font-weight:500;
-}
-
 .input-box input{
     width:100%;
-    padding:15px;
+    padding:16px;
     border:none;
+    background:#f1f5f9;
     border-radius:12px;
-    background:rgba(255,255,255,0.2);
-    color:white;
     font-size:15px;
-}
-
-.input-box input::placeholder{
-    color:#eee;
+    transition:0.3s;
 }
 
 .input-box input:focus{
     outline:none;
-    background:rgba(255,255,255,0.3);
+    background:#e2e8f0;
 }
 
 .btn{
     width:100%;
-    padding:15px;
+    padding:16px;
     border:none;
     border-radius:12px;
-    background:white;
-    color:#00b4db;
-    font-size:17px;
+    background:linear-gradient(135deg,#6a11cb,#2575fc);
+    color:white;
+    font-size:16px;
     font-weight:600;
     cursor:pointer;
     transition:0.3s;
@@ -89,82 +149,128 @@ body{
 }
 
 .link{
-    margin-top:25px;
+    margin-top:20px;
     text-align:center;
-    color:white;
 }
 
 .link a{
-    color:white;
-    font-weight:600;
+    color:#2575fc;
     text-decoration:none;
+    font-weight:600;
 }
 
-.circle{
-    position:absolute;
-    border-radius:50%;
-    background:rgba(255,255,255,0.1);
+@media(max-width:900px){
+
+    .container{
+        width:95%;
+        flex-direction:column;
+        height:auto;
+    }
+
+    .left{
+        padding:30px;
+    }
+
+    .right{
+        padding:40px 30px;
+    }
 }
 
-.circle1{
-    width:250px;
-    height:250px;
-    top:-50px;
-    left:-50px;
+/* Toast Error Message */
+
+.toast-error{
+    width:100%;
+    padding:14px 18px;
+    margin-bottom:25px;
+    border-radius:12px;
+    background:rgba(255,77,77,0.12);
+    border-left:5px solid #ff4d4d;
+    color:#d90429;
+    font-size:14px;
+    font-weight:500;
+    animation:fadeIn 0.4s ease;
 }
 
-.circle2{
-    width:200px;
-    height:200px;
-    bottom:-50px;
-    right:-50px;
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(-10px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 </style>
+
 </head>
 <body>
-	<div class="circle circle1"></div>
-<div class="circle circle2"></div>
+
+<div class="background">
+    <span></span>
+    <span></span>
+</div>
 
 <div class="container">
 
-    <h1>Login</h1>
+    <div class="left">
+        <h1>Items App</h1>
+        <p>
+            Manage your items easily with a modern dashboard.
+            Add, update, delete and manage item details.
+        </p>
+    </div>
 
-    <form action="/Items-Web-Application/AuthController" method="post">
+    <div class="right">
 
-        <input type="hidden" name="action" value="login">
+        <h2>Welcome Back</h2>
+        
+        <%
+    		String errorMessage = (String) request.getAttribute("errorMessage");
+		%>
+		
+		<% if(errorMessage != null){ %>
 
-        <div class="input-box">
-            <label>Username</label>
-            <input type="text"
-                   name="username"
-                   placeholder="Enter username"
-                   required>
+    		<div class="toast-error">
+        		<%= errorMessage %>
+    		</div>
+
+		<% } %>
+
+        <form action="/Items-Web-Application/LoginController" method="post">
+
+            <input type="hidden" name="action" value="login">
+
+            <div class="input-box">
+                <input type="text"
+                       name="username"
+                       placeholder="Username"
+                       required>
+            </div>
+
+            <div class="input-box">
+                <input type="password"
+                       name="password"
+                       placeholder="Password"
+                       required>
+            </div>
+
+            <button class="btn">
+                Login
+            </button>
+
+        </form>
+
+        <div class="link">
+            Don't have account ?
+            <a href="signup.jsp">Signup</a>
         </div>
 
-        <div class="input-box">
-            <label>Password</label>
-            <input type="password"
-                   name="password"
-                   placeholder="Enter password"
-                   required>
-        </div>
-
-        <button type="submit" class="btn">
-            Login
-        </button>
-        
-        <input type="hidden" name="action" value="login">
-        
-
-    </form>
-
-    <div class="link">
-        Don't have account ?
-        <a href="signup.jsp">Signup</a>
     </div>
 
 </div>
-	
+
 </body>
 </html>
