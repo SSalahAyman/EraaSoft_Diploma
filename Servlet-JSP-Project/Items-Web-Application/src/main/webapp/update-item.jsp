@@ -222,7 +222,7 @@ input::-webkit-inner-spin-button{
 
     </div>
 
-    <form action="/Items-Web-Application/ItemController">
+    <form action="/Items-Web-Application/ItemController" method ="post">
 
         <div class="input-box">
 

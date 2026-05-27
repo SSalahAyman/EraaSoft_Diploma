@@ -7,8 +7,13 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.Resource;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import exceptions.InvalidItemDataException;
+import exceptions.InvalidItemNameFormatException;
+import exceptions.ItemNotFoundException;
+import exceptions.MissingMandatoryField;
 import model.Item;
 import repo.ItemRepo;
 import repo.impl.ItemRepoImpl;
@@ -24,41 +29,47 @@ public class ItemServiceImpl implements ItemService {
 	ItemRepo itemRepo = new ItemRepoImpl();
 	
 	@Override
-	public List<Item> getAllItems() {
+	public List<Item> getAllItems() throws NamingException, SQLException {
 		List<Item> items = itemRepo.getAllItems();
 		return items;
 	}
 
 	@Override
-	public Item selectItem(Integer id) {
+	public Item selectItem(Integer id) throws ItemNotFoundException , NamingException, SQLException {
+		
 		Item item = itemRepo.selectItemById(id);
+		
+		if (Objects.isNull(item)) {
+			throw new ItemNotFoundException();
+		}
+		
 		return item;
-	}
-
-	@Override
-	public boolean saveItem(Item item) {
-		boolean isValidInputs = ItemInputValidator.isValidateAddItemInputs(item);
-		
-		if(!isValidInputs) {
-			return false;
-		}
-		return itemRepo.saveItem(item);
 		
 	}
 
 	@Override
-	public boolean updateitem(Item item) {
-		boolean isValidInputs = ItemInputValidator.isValidateUpdateitemInputs(item);
+	public void saveItem(Item item) throws MissingMandatoryField , InvalidItemNameFormatException , InvalidItemDataException, NamingException, SQLException   {
 		
-		if(!isValidInputs) {
-			return false;
-		}
-		return itemRepo.updateItem(item);
+		ItemInputValidator.validateAddItemInputs(item);
+		
+		 itemRepo.saveItem(item);
+		
 	}
 
 	@Override
-	public boolean deleteItem(Integer id) {
-		return itemRepo.deleteItem(id);
+	public void updateitem(Item item) throws MissingMandatoryField , InvalidItemNameFormatException , InvalidItemDataException, NamingException, SQLException {
+		
+		ItemInputValidator.validateUpdateItemInputs(item);
+		
+		 itemRepo.updateItem(item);
+		 
+	}
+
+	@Override
+	public void deleteItem(Integer id) throws NamingException, SQLException {
+		
+		itemRepo.deleteItem(id);
+		
 	}
 
 }

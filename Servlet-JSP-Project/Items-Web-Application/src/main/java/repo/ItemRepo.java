@@ -1,19 +1,22 @@
 package repo;
 
+import java.sql.SQLException;
 import java.util.List;
+
+import javax.naming.NamingException;
 
 import model.Item;
 
 public interface ItemRepo {
 	
-	List<Item> getAllItems(); 
+	List<Item> getAllItems() throws NamingException, SQLException; 
 	
-	Item selectItemById(Integer id);
+	Item selectItemById(Integer id) throws NamingException, SQLException;
 	
-	boolean saveItem(Item item);
+	void saveItem(Item item) throws NamingException, SQLException;
 	
-	boolean updateItem(Item item);
+	void updateItem(Item item) throws NamingException, SQLException;
 	
-	boolean deleteItem(Integer id);  
+	void deleteItem(Integer id) throws NamingException, SQLException;  
 	
 }

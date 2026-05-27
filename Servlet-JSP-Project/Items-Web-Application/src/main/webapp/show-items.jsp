@@ -200,7 +200,13 @@ body{
     gap:12px;
 }
 
-.actions a{
+.actions form{
+    flex:1;
+}
+
+.actions a,
+.actions button{
+
     flex:1;
 
     text-align:center;
@@ -216,6 +222,12 @@ body{
     font-weight:600;
 
     transition:0.3s;
+
+    border:none;
+
+    cursor:pointer;
+
+    font-size:15px;
 }
 
 /* Update Button */
@@ -232,7 +244,9 @@ body{
     box-shadow:0 10px 20px rgba(220,38,38,0.3);
 }
 
-.actions a:hover{
+.actions a:hover,
+.actions button:hover{
+
     transform:translateY(-2px);
 }
 
@@ -426,13 +440,27 @@ body{
             Update
 
         </a>
+        
+        <!-- doing hidden form here to with button submit for delete to can send the request as POST REQUEST not GET REQUEST because tag <a> send the request as GET -->
+        <form action="/Items-Web-Application/ItemController"
+      			method="post">
 
-        <a class="delete-btn"
-           href="/Items-Web-Application/ItemController?action=delete-item&id=<%= item.getId()%>">
+    		<input type="hidden"
+           		name="action"
+           		value="delete-item">
 
-            Delete
+    		<input type="hidden"
+           		name="id"
+           		value="<%= item.getId() %>">
 
-        </a>
+    		<button type="submit"
+            	class="delete-btn">
+
+        Delete
+
+    </button>
+
+</form>
 
     </div>
 

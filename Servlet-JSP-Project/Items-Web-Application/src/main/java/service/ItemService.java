@@ -1,7 +1,9 @@
 package service;
 
+import java.sql.SQLException;
 import java.util.List;
 
+import javax.naming.NamingException;
 import model.Item;
 
 /* this interface class is consists of services functions that help ItemController in process of handle the specific request that is coming to it 
@@ -10,14 +12,14 @@ import model.Item;
  */
 public interface ItemService {
 	
-	List<Item> getAllItems();
+	List<Item> getAllItems() throws NamingException, SQLException;
 	
-	Item selectItem(Integer id);
+	Item selectItem(Integer id) throws NamingException, SQLException;
 	
-	boolean saveItem(Item item);
+	void saveItem(Item item) throws NamingException, SQLException;
 	
-	boolean updateitem(Item item);
+	void updateitem(Item item) throws NamingException, SQLException;
 	
-	boolean deleteItem(Integer id);  //
+	void deleteItem(Integer id) throws NamingException, SQLException;  
 
 }
