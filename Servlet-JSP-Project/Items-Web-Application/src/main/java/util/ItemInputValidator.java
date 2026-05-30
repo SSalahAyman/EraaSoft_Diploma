@@ -29,7 +29,7 @@ public class ItemInputValidator {
 			throw new MissingMandatoryField();
 		}
 		
-		// // letters + spaces only
+		// letters + spaces only
 		if (!name.matches("^[a-zA-Z ]+$")) {
 			throw new InvalidItemNameFormatException();
 		}

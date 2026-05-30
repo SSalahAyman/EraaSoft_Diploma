@@ -39,7 +39,35 @@ public class ItemRepoImpl implements ItemRepo {
 		
 		try {
 			connection = DBConfig.getConnection();
-			String query = "SELECT * FROM ITEM";
+			
+			// String query = "SELECT * FROM ITEM";
+			
+			String query = " SELECT i.ID,\r\n"
+					+ "       i.NAME,\r\n"
+					+ "       i.PRICE,\r\n"
+					+ "       i.TOTAL_NUMBER,\r\n"
+					+ "\r\n"
+					+ "       CASE\r\n"
+					+ "           WHEN EXISTS (\r\n"
+					+ "               SELECT 1\r\n"
+					+ "               FROM ITEM_DETAILS d\r\n"
+					+ "               WHERE d.ITEM_ID = i.ID\r\n"
+					+ "           )\r\n"
+					+ "           THEN 1\r\n"
+					+ "           ELSE 0\r\n"
+					+ "       END AS HAS_DETAILS\r\n"
+					+ "\r\n"
+					+ "FROM ITEM i";
+			
+//			String query = """
+//			 SELECT i.ID,i.NAME,i.PRICE,i.TOTAL_NUMBER
+//					CASE 
+//					   WHEN d.ITEM_ID IS NOT NULL THEN 1
+//					   ELSE 0
+//					END AS HAS_DETAILS
+//		     FROM ITEM i LEFT JOIN ITEM_DETAILS d
+//			 ON i.ID = d.ITEM_ID
+//					""";
 			
 			preparedStatement = connection.prepareStatement(query);
 			
@@ -53,7 +81,11 @@ public class ItemRepoImpl implements ItemRepo {
 						resultSet.getDouble("PRICE"),
 						resultSet.getInt("TOTAL_NUMBER")
 				);
+				  
+		     item.setHasDetails(resultSet.getInt("HAS_DETAILS") == 1);  // that meaning if the current item that selected have HAS_DETAILS with 1 so it's true so meaning it have a row of item_details
+		     
 			 items.add(item);
+			 
 			}
 			 return items;
 		}

@@ -30,8 +30,11 @@ public class ItemServiceImpl implements ItemService {
 	
 	@Override
 	public List<Item> getAllItems() throws NamingException, SQLException {
+		
 		List<Item> items = itemRepo.getAllItems();
+		
 		return items;
+		
 	}
 
 	@Override

@@ -6,22 +6,24 @@ public class ItemDetails {
 	private String description;
 	private String color;
 	private double weight;
+	private String brand;
+	private Integer itemId;
 	
 	public ItemDetails() {
 		
 	}
 	
-	public ItemDetails(String description, String color, double weight) {
+	public ItemDetails(Integer itemId ,String description, String color, double weight,String brand) {
+		this.itemId=itemId;
 		this.description=description;
 		this.color=color;
 		this.weight=weight;
+		this.brand=brand;
 	}
 	
-	public ItemDetails(Integer id, String description, String color, double weight) {
+	public ItemDetails(Integer itemId , String description, String color, double weight , String brand , Integer id ) {
+		this(itemId,description,color,weight,brand);
 		this.id=id;
-		this.description=description;
-		this.color=color;
-		this.weight=weight;
 	}
 	
 	public void setId(Integer id) {
@@ -54,5 +56,19 @@ public class ItemDetails {
 	
 	public void setWeight(double weight) {
 		this.weight = weight;
+	}
+	public String getBrand() {
+		return brand;
+	}
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+	
+	public Integer getItemId() {
+	    return itemId;
+	}
+
+	public void setItemId(Integer itemId) {
+	    this.itemId = itemId;
 	}
 }

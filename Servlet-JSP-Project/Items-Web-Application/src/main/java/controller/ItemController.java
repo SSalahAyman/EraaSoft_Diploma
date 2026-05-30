@@ -142,7 +142,7 @@ public class ItemController extends HttpServlet {
 			
 			response.setStatus(HttpServletResponse.SC_OK);
 			
-			request.getRequestDispatcher("/show-items.jsp").forward(request, response);
+			request.getRequestDispatcher("/update-item.jsp").forward(request, response);
 			
 			// 500 SERVER ERROR (database / server errors)
 		} catch (NamingException | SQLException e) {

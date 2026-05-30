@@ -198,6 +198,7 @@ body{
     margin-top:30px;
     display:flex;
     gap:12px;
+    flex-wrap:wrap;
 }
 
 .actions form{
@@ -207,7 +208,7 @@ body{
 .actions a,
 .actions button{
 
-    flex:1;
+    width:100%;
 
     text-align:center;
 
@@ -228,6 +229,10 @@ body{
     cursor:pointer;
 
     font-size:15px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 /* Update Button */
@@ -334,6 +339,23 @@ body{
     border-radius:20px;
 }
 
+.details-btn{
+    flex:1;
+
+    background:linear-gradient(135deg,#8b5cf6,#7c3aed);
+
+    box-shadow:0 10px 20px rgba(124,58,237,0.3);
+}
+
+.view-details-btn{
+
+    flex:1;
+
+    background:linear-gradient(135deg,#06b6d4,#0891b2);
+
+    box-shadow:0 10px 20px rgba(8,145,178,0.3);
+}
+
 </style>
 
 </head>
@@ -434,35 +456,68 @@ body{
 
     <div class="actions">
 
-        <a class="update-btn"
-           href="/Items-Web-Application/ItemController?action=show-item&id=<%= item.getId()%>">
+    <!-- UPDATE -->
 
-            Update
+    <a class="update-btn"
+       href="/Items-Web-Application/ItemController?action=show-item&id=<%= item.getId()%>">
 
-        </a>
-        
-        <!-- doing hidden form here to with button submit for delete to can send the request as POST REQUEST not GET REQUEST because tag <a> send the request as GET -->
-        <form action="/Items-Web-Application/ItemController"
-      			method="post">
+        Update
 
-    		<input type="hidden"
-           		name="action"
-           		value="delete-item">
+    </a>
 
-    		<input type="hidden"
-           		name="id"
-           		value="<%= item.getId() %>">
+    <!-- DELETE -->
 
-    		<button type="submit"
-            	class="delete-btn">
+    <form action="/Items-Web-Application/ItemController"
+          method="post">
 
-        Delete
+        <input type="hidden"
+               name="action"
+               value="delete-item">
 
-    </button>
+        <input type="hidden"
+               name="id"
+               value="<%= item.getId() %>">
 
-</form>
+        <button type="submit"
+                class="delete-btn">
 
-    </div>
+            Delete
+
+        </button>
+
+    </form>
+
+    <!-- ITEM DETAILS -->
+    
+    <% if(!item.isHasDetails()) { %>
+    	
+    	<a class = "details_btn" 
+    	   href = "/Items-Web-Application/ItemDetailsController?action=show-add-details-form&id=<%= item.getId() %>">
+    	   
+    	    Add Details
+         </a>
+
+    <% } else { %>
+    
+    	<!-- VIEW DETAILS -->
+
+	    <a class="view-details-btn"
+	       href="/Items-Web-Application/ItemDetailsController?action=view-item-details&id=<%= item.getId() %>">
+	
+	        View Details
+	
+	    </a>
+    	
+    	<a class="details-btn"
+       href="/Items-Web-Application/ItemDetailsController?action=show-update-details-form&id=<%= item.getId() %>">
+
+        Update Details
+
+    	</a>
+    
+    <% } %>
+
+	</div>
 
 </div>
 

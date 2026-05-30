@@ -8,7 +8,7 @@ public class Item {
 	private String name;
 	private double price;
 	private Integer totalNumber;
-	
+	private boolean hasDetails;
 	
 	// define constructors that sued to build the object
 	public Item() {
@@ -53,5 +53,11 @@ public class Item {
 	}
 	public void setTotalNumber(Integer totalNumber) {
 		this.totalNumber = totalNumber;
+	}
+	public boolean isHasDetails() {
+		return hasDetails;
+	}
+	public void setHasDetails(boolean hasDetails) {
+		this.hasDetails = hasDetails;
 	}
 }
