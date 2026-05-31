@@ -15,7 +15,9 @@ import exceptions.InvalidItemNameFormatException;
 import exceptions.ItemNotFoundException;
 import exceptions.MissingMandatoryField;
 import model.Item;
+import repo.ItemDetailsRepo;
 import repo.ItemRepo;
+import repo.impl.ItemDetailsRepoImpl;
 import repo.impl.ItemRepoImpl;
 import service.ItemService;
 import util.ItemInputValidator;
@@ -27,6 +29,8 @@ public class ItemServiceImpl implements ItemService {
 //	private DataSource dataSource;
 	
 	ItemRepo itemRepo = new ItemRepoImpl();
+	
+	ItemDetailsRepo itemDetailsRepo = new ItemDetailsRepoImpl();
 	
 	@Override
 	public List<Item> getAllItems() throws NamingException, SQLException {
@@ -71,6 +75,20 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public void deleteItem(Integer id) throws NamingException, SQLException {
 		
+		/*
+	     * First delete the item's details (if they exist)
+	     * to avoid Foreign Key Constraint violations.
+	     *
+	     * If no details exist for this item,
+	     * the DELETE query simply affects 0 rows
+	     * and no exception will be thrown.
+	     */
+		itemDetailsRepo.deleteItemDetailsByItemId(id);
+		
+		/*
+	     * After deleting the related details,
+	     * delete the main item record.
+	     */
 		itemRepo.deleteItem(id);
 		
 	}

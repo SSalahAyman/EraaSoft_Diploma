@@ -13,5 +13,7 @@ public interface ItemDetailsRepo {
     void addItemDetails(ItemDetails itemDetails) throws NamingException,SQLException;
 
     void updateItemDetails(ItemDetails itemDetails) throws NamingException, SQLException;
+    
+    void deleteItemDetailsByItemId(Integer itemId) throws NamingException, SQLException;
 	
 }

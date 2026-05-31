@@ -136,4 +136,35 @@ public class ItemDetailsRepoImpl implements ItemDetailsRepo {
 		
 	}
 
+	@Override
+	public void deleteItemDetailsByItemId(Integer itemId) throws NamingException, SQLException {
+		
+		Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+
+	    try {
+
+	        connection = DBConfig.getConnection();
+
+	        String query = "DELETE FROM ITEM_DETAILS WHERE ITEM_ID = ?";
+
+	        preparedStatement = connection.prepareStatement(query);
+
+	        preparedStatement.setInt(1, itemId);
+
+	        preparedStatement.executeUpdate();
+
+	    } finally {
+
+	    	if (Objects.nonNull(connection)) {
+				connection.close();
+			}
+			
+			if(preparedStatement != null) {
+		        preparedStatement.close();
+		    }
+	    }
+		
+	}
+
 }

@@ -164,7 +164,7 @@ public class ItemDetailsController extends HttpServlet {
 		
 		   request.setAttribute("errorMessage", e.getMessage());
 		
-		    request.getRequestDispatcher( "/item-details-not-found.jsp").forward(request,response);  // [we must create this page]
+		    request.getRequestDispatcher( "/item-details-not-found.jsp").forward(request,response);  
 			
 		   // 500 SERVER ERROR (database / server errors)
 		} catch (NamingException | SQLException e) {

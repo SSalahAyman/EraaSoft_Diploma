@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import exceptions.ItemNotFoundException;
 import model.Item;
 import service.ItemService;
 import service.impl.ItemServiceImpl;
@@ -117,20 +118,9 @@ public class ItemController extends HttpServlet {
 		}
 	}
 
-//	private void showItems(HttpServletRequest request, HttpServletResponse response) {
-//		List<Item> items = itemService.getAllItems();  // this "items list" have now object of item that every object mapping to a row of ITEM table in database
-//		request.setAttribute("allItems", items);
-//		try {
-//			request.getRequestDispatcher("/show-items.jsp").forward(request, response);   // here must do try/catch here because the path that we put can be not found 
-//		} catch (ServletException | IOException e) {
-//			System.out.println("Exception " + e.getMessage());
-//		}
-//		// TODO : code that send the list of items to front-end page to showing it in browser
-//	}
 
-
-	private void showItem(HttpServletRequest request, HttpServletResponse response) {
-		
+	private void showItem(HttpServletRequest request, HttpServletResponse response) throws ServletException , IOException {
+		 
 		// 200 OK (show item success)
 		try {
 			
@@ -144,47 +134,27 @@ public class ItemController extends HttpServlet {
 			
 			request.getRequestDispatcher("/update-item.jsp").forward(request, response);
 			
+			// 404 Not Found (not found this item that we want to show it)
+		} catch(ItemNotFoundException e) {
+			
+			response.setStatus( HttpServletResponse.SC_NOT_FOUND);
+			
+			request.setAttribute("errorMessage", e.getMessage());
+			
+			request.getRequestDispatcher( "/item-not-found.jsp").forward(request,response); // [we must create this page]
+			
 			// 500 SERVER ERROR (database / server errors)
 		} catch (NamingException | SQLException e) {
 			
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			
 			request.setAttribute("errorMessage", "InternalServerError");
-			
-			try {
-				request.getRequestDispatcher("/error.jsp").forward(request, response);
-			} catch (ServletException | IOException e1) {
-				
-				e1.printStackTrace();
-			}
-			
-		} catch (ServletException | IOException e) {
-			
-			e.printStackTrace();
+
+	        request.getRequestDispatcher("/error.jsp").forward(request, response);
+
+		   } 
 		}
 		
-		
-		
-		
-//		if(Objects.nonNull(item)) {  // if item is "non null" that is mean there is a row it is selected or returned from the Database , so save it in attribute to send to update-item page when you request it
-//			request.setAttribute("itemSelected", item);
-//			
-//			try {
-//				request.getRequestDispatcher("/update-item.jsp").forward(request, response);
-//			} catch(ServletException | IOException e){
-//				System.out.println("Exception " + e.getMessage());
-//			}
-//		} else {
-//			try {
-//				request.getRequestDispatcher("item-not-found.html").forward(request, response);
-//			} catch(ServletException | IOException e){
-//				System.out.println("Exception " + e.getMessage());
-//			}
-//		}
-			
-		
-	}
-
 	
 	private void addItem(HttpServletRequest request, HttpServletResponse response) {
 		
@@ -223,28 +193,6 @@ public class ItemController extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		
-//		try {
-//			String name = request.getParameter("itemName");
-//			double price =Double.parseDouble(request.getParameter("itemPrice"));
-//			Integer totalNumber = Integer.parseInt(request.getParameter("itemTotalNumber"));
-//			
-//			Item item = new Item(name,price,totalNumber);
-//			
-//			boolean isItemAdded = itemService.saveItem(item);
-//			
-//			if(isItemAdded) {
-//		        response.sendRedirect("/Items-Web-Application/ItemController?action=show-items");
-// // execute else when your data causes the validation is failed such as when user enter name = "" , price = -50 , so the isItemAdded is false so execute else block , so the else mean the program success running but the data not corrected
-//			} else {  
-//				request.setAttribute("error message", "Invalid item data");
-//				// here return again to the add-item page with request has error message
-//				request.getRequestDispatcher("/add-item.html").forward(request, response);
-//			}
-//		} catch (Exception e) {  // the method execute catch when the the error has appear During execution. such as in (Double.parseDouble) when user enter "abc" so this line has throw "NumberFormatException"
-//			System.out.println("Exception " + e.getMessage());
-//
-//		}
 		
 	}
 
@@ -285,32 +233,6 @@ public class ItemController extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		
-//		try {
-//			
-//			Integer id = Integer.parseInt(request.getParameter("id"));
-//			String name = request.getParameter("itemName");
-//			double price = Double.parseDouble(request.getParameter("itemPrice"));
-//			Integer totalNumber = Integer.parseInt(request.getParameter("itemTotalNumber")); 
-//			
-//			Item item = new Item (id, name,price,totalNumber);
-//			
-//			boolean itItemUpdated = itemService.updateitem(item);
-//			
-//			if(itItemUpdated) {
-//				response.sendRedirect( "/Items-Web-Application/ItemController?action=show-items");
-//			} else {
-//				try {
-//					request.getRequestDispatcher("item-not-found.html").forward(request, response);
-//				} catch(ServletException | IOException e){
-//					System.out.println("Exception " + e.getMessage());
-//				}
-//			}
-//			
-//		} catch (Exception e) {
-//			System.out.println("Exception " + e.getMessage());
-//		}
-		
 	}
 
 
@@ -337,6 +259,8 @@ public class ItemController extends HttpServlet {
 			
 			request.setAttribute("errorMessage", "InternalServerError");
 			
+			e.printStackTrace();
+			
 			try {
 				request.getRequestDispatcher("/error.jsp").forward(request, response);
 			} catch (ServletException | IOException e1) {
@@ -348,26 +272,6 @@ public class ItemController extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		
-//		try {
-//
-//			Integer id = Integer.parseInt(request.getParameter("id"));
-//
-//	        boolean isItemDeleted = itemService.deleteItem(id);
-//
-//	        if(isItemDeleted) {
-//
-//	            response.sendRedirect( "/Items-Web-Application/ItemController?action=show-items");
-//
-//	        } else {
-//
-//	            System.out.println("Delete failed");
-//	        }
-//
-//	    } catch (Exception e) {
-//
-//	        System.out.println("Exception " + e.getMessage());
-//	    }
 		
 	}
 

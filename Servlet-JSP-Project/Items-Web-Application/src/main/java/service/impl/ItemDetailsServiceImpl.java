@@ -63,5 +63,7 @@ public class ItemDetailsServiceImpl implements ItemDetailsService {
 		itemDetailsRepo.updateItemDetails(itemDetails);
 		
 	}
+	
+	
 
 }
