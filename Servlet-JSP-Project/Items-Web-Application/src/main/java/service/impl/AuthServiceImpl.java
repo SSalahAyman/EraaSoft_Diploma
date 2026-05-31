@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import exceptions.InvalidCredentialsException;
 import exceptions.MissingMandatoryField;
@@ -68,6 +69,10 @@ public class AuthServiceImpl implements AuthService {
 		if (receivedUser == null) {
 			throw new InvalidCredentialsException();
 		}
+		
+		HttpSession session = request.getSession();
+		 
+		session.setAttribute("userId",receivedUser.getId());
 		
 		return receivedUser;
 		
