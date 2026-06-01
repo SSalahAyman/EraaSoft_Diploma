@@ -375,7 +375,7 @@ body{
             + Add Item
         </a>
 
-        <a href="/Items-Web-Application/AuthController?action=logout"
+        <a href="/Items-Web-Application/LogoutController"
            class="logout-btn">
             Logout
         </a>
