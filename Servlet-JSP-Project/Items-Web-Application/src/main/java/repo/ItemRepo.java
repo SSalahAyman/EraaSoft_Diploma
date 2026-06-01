@@ -9,7 +9,7 @@ import model.Item;
 
 public interface ItemRepo {
 	
-	List<Item> getAllItems() throws NamingException, SQLException; 
+	List<Item> getAllItemsByUserId(Integer userId) throws NamingException, SQLException; 
 	
 	Item selectItemById(Integer id) throws NamingException, SQLException;
 	

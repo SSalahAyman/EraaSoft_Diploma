@@ -1,15 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-أيوه، إحنا اتكلمنا قبل كده إن لو المستخدم ضغط View Details على Item ملوش Details أصلاً، نعرض صفحة مخصصة بدل Error.
-
-ممكن تعمل صفحة اسمها:
-
-item-details-not-found.jsp
-
-بنفس تصميم المشروع:
-
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>  
 
 <!DOCTYPE html>
 <html>

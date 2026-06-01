@@ -32,7 +32,7 @@ public class ItemRepoImpl implements ItemRepo {
 //	}
 
 	@Override
-	public List<Item> getAllItems() throws NamingException, SQLException {
+	public List<Item> getAllItemsByUserId(Integer userId) throws NamingException, SQLException {
 		Connection connection = null; 
 		PreparedStatement preparedStatement = null;
 		List<Item> items = new ArrayList();
@@ -57,7 +57,8 @@ public class ItemRepoImpl implements ItemRepo {
 					+ "           ELSE 0\r\n"
 					+ "       END AS HAS_DETAILS\r\n"
 					+ "\r\n"
-					+ "FROM ITEM i";
+					+ "FROM ITEM i "
+			        + "WHERE i.USER_ID = ?";
 			
 //			String query = """
 //			 SELECT i.ID,i.NAME,i.PRICE,i.TOTAL_NUMBER
@@ -71,7 +72,9 @@ public class ItemRepoImpl implements ItemRepo {
 			
 			preparedStatement = connection.prepareStatement(query);
 			
-			ResultSet resultSet = preparedStatement.executeQuery(query);
+			preparedStatement.setInt(1, userId);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			Item item = null;
 			while(resultSet.next()) {
@@ -143,12 +146,13 @@ public class ItemRepoImpl implements ItemRepo {
 		
 		try {
 			connection = DBConfig.getConnection();
-			String query = "INSERT INTO ITEM (NAME, PRICE, TOTAL_NUMBER) VALUES (?,?,?)";
+			String query = "INSERT INTO ITEM (USER_ID,NAME, PRICE, TOTAL_NUMBER) VALUES (?,?,?,?)";
 			
 			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, item.getName());
-			preparedStatement.setDouble(2,item.getPrice());
-			preparedStatement.setDouble(3,item.getTotalNumber());
+			preparedStatement.setInt(1, item.getUserId());
+			preparedStatement.setString(2, item.getName());
+			preparedStatement.setDouble(3,item.getPrice());
+			preparedStatement.setDouble(4,item.getTotalNumber());
 			
 			preparedStatement.executeUpdate();
 			

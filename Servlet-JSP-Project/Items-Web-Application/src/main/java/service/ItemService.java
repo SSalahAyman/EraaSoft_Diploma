@@ -12,7 +12,7 @@ import model.Item;
  */
 public interface ItemService {
 	
-	List<Item> getAllItems() throws NamingException, SQLException;
+	List<Item> getAllItemsByUserId(Integer userId) throws NamingException, SQLException;
 	
 	Item selectItem(Integer id) throws NamingException, SQLException;
 	

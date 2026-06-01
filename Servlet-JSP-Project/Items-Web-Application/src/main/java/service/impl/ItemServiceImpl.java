@@ -33,9 +33,9 @@ public class ItemServiceImpl implements ItemService {
 	ItemDetailsRepo itemDetailsRepo = new ItemDetailsRepoImpl();
 	
 	@Override
-	public List<Item> getAllItems() throws NamingException, SQLException {
+	public List<Item> getAllItemsByUserId(Integer userId) throws NamingException, SQLException {
 		
-		List<Item> items = itemRepo.getAllItems();
+		List<Item> items = itemRepo.getAllItemsByUserId(userId);
 		
 		return items;
 		

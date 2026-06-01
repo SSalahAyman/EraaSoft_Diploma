@@ -8,9 +8,10 @@ public class Item {
 	private String name;
 	private double price;
 	private Integer totalNumber;
+	private Integer userId;
 	private boolean hasDetails;
 	
-	// define constructors that sued to build the object
+	// define constructors that used to build the object
 	public Item() {
 		
 	}
@@ -22,10 +23,8 @@ public class Item {
 	}
 	
 	public Item(Integer id, String name, double price , Integer totalNumber) {
+		this(name,price,totalNumber);
 		this.id = id;
-		this.name = name;
-		this.price = price;
-		this.totalNumber = totalNumber;
 	}
 	
 		
@@ -59,5 +58,11 @@ public class Item {
 	}
 	public void setHasDetails(boolean hasDetails) {
 		this.hasDetails = hasDetails;
+	}
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 }

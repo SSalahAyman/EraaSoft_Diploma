@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import exceptions.ItemNotFoundException;
 import model.Item;
@@ -88,7 +89,11 @@ public class ItemController extends HttpServlet {
 		// 200 OK (show items success)
 		try {
 			
-			List<Item> items = itemService.getAllItems();
+			HttpSession session = request.getSession(false);
+			
+			Integer userId = (Integer) session.getAttribute("userId");
+			
+			List<Item> items = itemService.getAllItemsByUserId(userId);
 			
 			request.setAttribute("allItems", items);
 			
@@ -98,6 +103,8 @@ public class ItemController extends HttpServlet {
 			
 			// 500 SERVER ERROR (database / server errors)
 		}  catch (NamingException | SQLException e) {
+			
+			e.printStackTrace();
 			
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			
@@ -165,7 +172,13 @@ public class ItemController extends HttpServlet {
 			double price = Double.parseDouble(request.getParameter("itemPrice"));
 			Integer totalNumber = Integer.parseInt(request.getParameter("itemTotalNumber"));
 			
+			HttpSession session = request.getSession(false);
+			
+			Integer userId = (Integer) session.getAttribute("userId");
+			
 			Item item = new Item(name,price,totalNumber);
+			
+			item.setUserId(userId);
 			
 			itemService.saveItem(item);
 			
