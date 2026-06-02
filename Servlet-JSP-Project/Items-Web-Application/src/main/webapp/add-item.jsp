@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -209,9 +211,51 @@ input::-webkit-inner-spin-button{
     }
 }
 
-</style>
+.toast{
 
+    width:100%;
+
+    margin-bottom:25px;
+
+    padding:16px 20px;
+
+    border-radius:16px;
+
+    background:rgba(239,68,68,0.15);
+
+    border:1px solid rgba(239,68,68,0.4);
+
+    color:#fecaca;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:14px;
+
+    font-weight:500;
+
+    animation:fadeIn .3s ease;
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(-10px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+</style>
 </head>
+
 <body>
 
 <div class="container">
@@ -223,6 +267,20 @@ input::-webkit-inner-spin-button{
         <p>Create a new item for your dashboard</p>
 
     </div>
+	   	<%
+	String errorMessage =
+	    (String) session.getAttribute("errorMessage");
+	
+	session.removeAttribute("errorMessage");
+	%>
+	
+	<% if(errorMessage != null){ %>
+	
+	<div id="toast" class="toast">
+	    <%= errorMessage %>
+	</div>
+	
+	<% } %>
 
     <form action="/Items-Web-Application/ItemController" method="post">
 
@@ -233,7 +291,7 @@ input::-webkit-inner-spin-button{
             <input type="text"
                    name="itemName"
                    placeholder="Enter item name"
-                   required>
+                   >
 
         </div>
 
@@ -283,6 +341,21 @@ input::-webkit-inner-spin-button{
     </div>
 
 </div>
+
+	<script>
+	
+	const toast = document.getElementById("toast");
+	
+	if(toast){
+	
+	    setTimeout(() => {
+	
+	        toast.style.display = "none";
+	
+	    },5000);
+	}
+	
+	</script>
 
 </body>
 </html>

@@ -1,15 +1,10 @@
 package service.impl;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.annotation.Resource;
 import javax.naming.NamingException;
-import javax.sql.DataSource;
-
 import exceptions.InvalidItemDataException;
 import exceptions.InvalidItemNameFormatException;
 import exceptions.ItemNotFoundException;

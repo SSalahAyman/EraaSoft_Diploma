@@ -263,6 +263,48 @@ input::-webkit-inner-spin-button{
     }
 }
 
+.toast{
+
+    width:100%;
+
+    margin-bottom:25px;
+
+    padding:16px 20px;
+
+    border-radius:16px;
+
+    background:rgba(239,68,68,0.15);
+
+    border:1px solid rgba(239,68,68,0.4);
+
+    color:#fecaca;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:14px;
+
+    font-weight:500;
+
+    animation:fadeIn .3s ease;
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(-10px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
 </style>
 
 </head>
@@ -279,7 +321,21 @@ input::-webkit-inner-spin-button{
         </p>
 
     </div>
+	
+	 <%
+    	String errorMessage =(String) session.getAttribute("errorMessage");
 
+    	session.removeAttribute("errorMessage");  // doing remove attribute here to can message toast can appear one only and when doing refresh to the page the toast not appear
+	%>
+	
+	<% if(errorMessage != null){ %>
+	
+	<div id="toast" class="toast">
+	    <%= errorMessage %>
+	</div>
+	
+	<% } %>
+	
     <form action="/Items-Web-Application/ItemDetailsController"
           method="post">
 
@@ -369,6 +425,19 @@ input::-webkit-inner-spin-button{
     </form>
 
 </div>
-
+	<script>
+	
+	const toast = document.getElementById("toast");
+	
+	if(toast){
+	
+	    setTimeout(() => {
+	
+	        toast.style.display = "none";
+	
+	    },5000);
+	}
+	
+	</script>
 </body>
 </html>

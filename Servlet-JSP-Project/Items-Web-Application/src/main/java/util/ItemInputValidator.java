@@ -37,7 +37,7 @@ public class ItemInputValidator {
 		
 	}
 	
-	public static void validatePriceInput(double price) {
+	public static void validatePriceInput(Double price) {
 			
 			if (Objects.isNull(price)) {
 				throw new MissingMandatoryField();
@@ -62,33 +62,5 @@ public class ItemInputValidator {
 		
 		
 	}
-//	public static boolean isValidateAddItemInputs(Item item) {
-//		
-//		return isValidName(item.getName())
-//				&&isValidPrice(item.getPrice())
-//				&& isValidTotalNumber(item.getTotalNumber());
-//	}
-//	
-//	public static boolean isValidateUpdateitemInputs(Item item) {
-//		return isValidName(item.getName())
-//				&&isValidPrice(item.getPrice())
-//				&& isValidTotalNumber(item.getTotalNumber());
-//	}
-//	
-//	public static boolean isValidName(String name) {
-//
-//        return Objects.nonNull(name) && !name.trim().isEmpty();
-//    }
-//
-//    public static boolean isValidPrice(double price) {
-//
-//        return price > 0;
-//    }
-//
-//    public static boolean isValidTotalNumber(int totalNumber) {
-//
-//        return totalNumber >= 0;
-//    }
-	
-	
+
 }

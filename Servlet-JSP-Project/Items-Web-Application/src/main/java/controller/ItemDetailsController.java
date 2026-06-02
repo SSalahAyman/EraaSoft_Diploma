@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import exceptions.InvalidItemDetailsException;
 import exceptions.ItemDetailsAlreadyExistsException;
@@ -98,7 +99,7 @@ public class ItemDetailsController extends HttpServlet {
 			
 			request.setAttribute("errorMessage", e.getMessage());
 			
-			request.getRequestDispatcher( "/item-details-not-found.jsp").forward(request,response);  // [we must create this page]
+			request.getRequestDispatcher( "/item-details-not-found.jsp").forward(request,response);  
 			
 		
 		 // 500 SERVER ERROR (database / server errors)
@@ -107,22 +108,11 @@ public class ItemDetailsController extends HttpServlet {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			
 			request.setAttribute("errorMessage", "InternalServerError");
-			
-			try {
-				request.getRequestDispatcher("/error.jsp").forward(request, response);
-			} catch (ServletException | IOException e1) {
-			
-				e1.printStackTrace();
-			}
-			
-			
-		} catch (ServletException | IOException e) {
-			
-			e.printStackTrace();
+	
+			request.getRequestDispatcher("/error.jsp").forward(request, response);
+	
 		} 
-		
-		
-		
+	
 	}
 	
 	private void showAddDetailsForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -150,6 +140,19 @@ public class ItemDetailsController extends HttpServlet {
 			Integer itemId = Integer.parseInt(request.getParameter("id"));
 			
 			ItemDetails itemDetails = itemDetailsService.getItemDetailsByItemId(itemId);
+			
+			HttpSession session = request.getSession();
+			
+			ItemDetails oldItemDetails =(ItemDetails) session.getAttribute("oldItemDetails");
+			
+			// Use user's last entered values after validation failure.
+			if (oldItemDetails != null && oldItemDetails.getItemId().equals(itemId)) {
+
+			    itemDetails = oldItemDetails;
+
+			    // Remove old values after first use.
+			    session.removeAttribute("oldItemDetails");
+			}
 			
 			request.setAttribute("itemDetails", itemDetails);
 			
@@ -180,10 +183,9 @@ public class ItemDetailsController extends HttpServlet {
 	
 	private void addItemDetails(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		Integer itemId = Integer.parseInt(request.getParameter("itemId"));
 		// 200 OK (addItemDetails success)
 		try {
-			
-			Integer itemId = Integer.parseInt(request.getParameter("itemId"));
 			
 			String description = request.getParameter("description");
 			
@@ -206,18 +208,22 @@ public class ItemDetailsController extends HttpServlet {
 			
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			
-			request.setAttribute("errorMessage", e.getMessage());
+			HttpSession session = request.getSession();
 			
-			request.getRequestDispatcher("/add-item-details.jsp").forward(request, response);
+			session.setAttribute("errorMessage", e.getMessage());
+			
+			response.sendRedirect("/Items-Web-Application/ItemDetailsController?action=show-add-details-form&id="+ itemId);
 			
 			 // 409 CONFLICT
 		} catch (ItemDetailsAlreadyExistsException e) {
 			
 			response.setStatus(HttpServletResponse.SC_CONFLICT);
 			 
-			 request.setAttribute("errorMessage", e.getMessage());
+			HttpSession session = request.getSession();
+			
+			session.setAttribute("errorMessage", e.getMessage());
 			 
-			 request.getRequestDispatcher("/add-item-details.jsp").forward(request, response);
+			response.sendRedirect("/Items-Web-Application/ItemDetailsController?action=show-add-details-form&id="+ itemId);
 			
 			 // 500 SERVER ERROR (database / server errors)
 		} catch (NamingException | SQLException e) {
@@ -236,19 +242,19 @@ public class ItemDetailsController extends HttpServlet {
 
 	private void updateItemDetails(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
+		Integer itemId = Integer.parseInt( request.getParameter("itemId"));
+		
+		String description = request.getParameter("description");
+
+        String color = request.getParameter("color");
+
+        Double weight = Double.parseDouble( request.getParameter("weight"));
+
+        String brand = request.getParameter("brand");
+        
 		// 200 OK (updateItemDetails success)
 		try {
 			
-			Integer itemId = Integer.parseInt( request.getParameter("itemId"));
-			
-			String description = request.getParameter("description");
-
-            String color = request.getParameter("color");
-
-            Double weight = Double.parseDouble( request.getParameter("weight"));
-
-            String brand = request.getParameter("brand");
-            
             ItemDetails itemDetails =new ItemDetails(itemId,description,color, weight,brand);
             
             itemDetailsService.updateItemDetails(itemDetails);
@@ -262,9 +268,15 @@ public class ItemDetailsController extends HttpServlet {
 			
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			
-			request.setAttribute("errorMessage",e.getMessage());
+			HttpSession session = request.getSession();
+			
+			session.setAttribute("errorMessage", e.getMessage());
+			
+			ItemDetails oldItemDetails =new ItemDetails(itemId,description,color,weight,brand);
 
-            request.getRequestDispatcher("/update-item-details.jsp").forward(request,response);
+			session.setAttribute("oldItemDetails",oldItemDetails);
+
+			response.sendRedirect("/Items-Web-Application/ItemDetailsController?action=show-update-details-form&id="+ itemId);
 			
          // 404 Not Found (not found details for the selected item to update it)
 		} catch (ItemDetailsNotFoundException e) {

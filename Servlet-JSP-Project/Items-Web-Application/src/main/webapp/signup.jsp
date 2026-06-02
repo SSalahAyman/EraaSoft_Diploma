@@ -276,10 +276,16 @@ body{
 
         <h2>Create Account</h2>
 
-        <%
-            String errorMessage =
-            (String)request.getAttribute("errorMessage");
-        %>
+	     <%
+			String errorMessage =(String) session.getAttribute("errorMessage");
+	     	
+	        String oldUsername =(String) session.getAttribute("oldUsername");
+	       
+			session.removeAttribute("errorMessage");
+			
+			session.removeAttribute("oldUsername");
+		
+	     %>
 
         <% if(errorMessage != null){ %>
 
@@ -303,6 +309,7 @@ body{
                 <input type="text"
                        name="username"
                        placeholder="Enter username"
+                       value="<%= oldUsername != null ? oldUsername : "" %>"
                        >
 
             </div>
@@ -350,4 +357,7 @@ body{
 
     </div>
 
-</div>
+</div>x
+
+</body>
+</html>

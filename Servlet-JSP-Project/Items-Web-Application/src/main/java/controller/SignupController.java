@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import exceptions.MissingMandatoryField;
 import exceptions.PasswordMismatchException;
@@ -48,9 +49,13 @@ public class SignupController extends HttpServlet {
 			
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			
-			request.setAttribute("errorMessage", e.getMessage());
+			HttpSession session = request.getSession();
+
+			session.setAttribute("errorMessage", e.getMessage());
 			
-			request.getRequestDispatcher("/signup.jsp").forward(request, response);
+			session.setAttribute("oldUsername",request.getParameter("username"));
+			
+			response.sendRedirect("signup.jsp");
 			
 		  } 
 		 
@@ -59,9 +64,13 @@ public class SignupController extends HttpServlet {
 			 
 			 response.setStatus(HttpServletResponse.SC_CONFLICT);
 			 
-			 request.setAttribute("errorMessage", e.getMessage());
+			 HttpSession session = request.getSession();
+
+			 session.setAttribute("errorMessage", e.getMessage());
 			 
-			 request.getRequestDispatcher("/signup.jsp").forward(request, response);
+			 session.setAttribute("oldUsername",request.getParameter("username"));
+			 
+			 response.sendRedirect("signup.jsp");
 			 
 		 }
 		 

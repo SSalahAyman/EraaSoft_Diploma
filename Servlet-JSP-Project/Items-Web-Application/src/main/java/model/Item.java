@@ -6,7 +6,7 @@ public class Item {
 	// define the attributes for any item
 	private Integer id;
 	private String name;
-	private double price;
+	private Double price;
 	private Integer totalNumber;
 	private Integer userId;
 	private boolean hasDetails;
@@ -16,13 +16,13 @@ public class Item {
 		
 	}
 	
-	public Item(String name, double price , Integer totalNumber) {
+	public Item(String name, Double price , Integer totalNumber) {
 		this.name = name;
 		this.price = price;
 		this.totalNumber = totalNumber;
 	}
 	
-	public Item(Integer id, String name, double price , Integer totalNumber) {
+	public Item(Integer id, String name, Double price , Integer totalNumber) {
 		this(name,price,totalNumber);
 		this.id = id;
 	}
@@ -35,7 +35,7 @@ public class Item {
 	public String getName() {
 		return name;
 	}
-	public double getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 	public Integer getTotalNumber() {
@@ -47,7 +47,7 @@ public class Item {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public void setPrice(double price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 	public void setTotalNumber(Integer totalNumber) {

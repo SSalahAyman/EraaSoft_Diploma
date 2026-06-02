@@ -43,9 +43,11 @@ public class LoginController extends HttpServlet {
 			
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			
-			request.setAttribute("errorMessage", e.getMessage());
+			HttpSession session = request.getSession();
+
+			session.setAttribute("errorMessage", e.getMessage());
 			
-			request.getRequestDispatcher("/login.jsp").forward(request, response);
+			response.sendRedirect("login.jsp");
 			
 		}
 		 

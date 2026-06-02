@@ -371,7 +371,7 @@ body{
 
     <div class="nav-right">
 
-        <a href="/Items-Web-Application/add-Item.html" class="add-btn">
+        <a href="/Items-Web-Application/add-item.jsp" class="add-btn">
             + Add Item
         </a>
 
@@ -439,7 +439,7 @@ body{
         <span>Price</span>
 
         <strong>
-            $ <%= item.getPrice() %>
+            <%= item.getPrice() %>
         </strong>
 
     </div>

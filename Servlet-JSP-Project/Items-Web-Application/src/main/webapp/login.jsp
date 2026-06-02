@@ -228,7 +228,10 @@ body{
         <h2>Welcome Back</h2>
         
         <%
-    		String errorMessage = (String) request.getAttribute("errorMessage");
+        	String errorMessage =(String) session.getAttribute("errorMessage");
+        
+        	session.removeAttribute("errorMessage");
+        	
 		%>
 		
 		<% if(errorMessage != null){ %>
