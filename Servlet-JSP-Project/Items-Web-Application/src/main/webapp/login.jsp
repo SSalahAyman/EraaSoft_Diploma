@@ -259,6 +259,16 @@ body{
                        placeholder="Password"
                        required>
             </div>
+            
+            <div style="text-align:right; margin-bottom:20px;">
+
+    		<a href="/Items-Web-Application/forget-password.jsp"
+       			style="font-size:14px; color:#2575fc; text-decoration:none;">
+
+        			Forgot Password?
+    		</a>
+
+		</div>
 
             <button class="btn">
                 Login

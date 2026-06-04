@@ -1,6 +1,7 @@
 package service.impl;
 
 import java.sql.SQLException;
+import java.util.Objects;
 
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,11 +11,13 @@ import exceptions.InvalidCredentialsException;
 import exceptions.MissingMandatoryField;
 import exceptions.PasswordMismatchException;
 import exceptions.UserAlreadyExistsException;
+import exceptions.UserNotFoundException;
 import exceptions.ValidationException;
 import model.User;
 import repo.UserRepo;
 import repo.impl.UserRepoImpl;
 import service.AuthService;
+import util.AuthInputValidator;
 import util.LoginValidator;
 import util.SignupValidator;
 
@@ -32,7 +35,7 @@ public class AuthServiceImpl implements AuthService {
 		String confirmPassword = request.getParameter("confirmPassword");
 		
 		// validation
-		SignupValidator.validateSignupInputs(userName, password, confirmPassword);
+		AuthInputValidator.validateSignupInputs(userName, password, confirmPassword);
 		
 		// create user object with the input data after validation is successed
 		User user = new User(userName,password);
@@ -62,7 +65,7 @@ public class AuthServiceImpl implements AuthService {
 		String password = request.getParameter("password");
 		
 		// validation
-		LoginValidator.validateLoginInputs(userName, password);
+		AuthInputValidator.validateLoginInputs(userName, password);
 		
 		User receivedUser = userRepo.login(userName, password);
 		
@@ -75,6 +78,38 @@ public class AuthServiceImpl implements AuthService {
 		session.setAttribute("userId",receivedUser.getId());
 		
 		return receivedUser;
+		
+	}
+
+	@Override
+	public void checkUsername(String username) throws SQLException, NamingException ,MissingMandatoryField, UserNotFoundException {
+		
+		if (Objects.isNull(username) || username.trim().isEmpty()) {
+			
+			throw new MissingMandatoryField();
+			
+		}
+		
+		User user = userRepo.findByUsername(username);
+		
+		if(user == null) {
+			
+			 throw new UserNotFoundException();
+			 
+		}
+		
+		
+	}
+
+	@Override
+	public void resetPassword(String username, String password, String confirmPassword) throws SQLException, NamingException , MissingMandatoryField,PasswordMismatchException,ValidationException {
+		
+		AuthInputValidator.validatePassword(password);
+		
+		AuthInputValidator.validatePasswordConfirmation(password, confirmPassword);
+		
+		userRepo.updatePassword(username, confirmPassword);
+		
 		
 	}
 

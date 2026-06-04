@@ -27,7 +27,15 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
         String uri = req.getRequestURI();
 
 // Public Pages (this pages & controllers when user request this url's the filter is not working on it and other url's inside itemController or itemDetails Controller checking it's have session or not)
-        if(uri.endsWith("login.jsp") || uri.endsWith("signup.jsp") || uri.contains("LoginController") || uri.contains("SignupController") || uri.contains("LogoutController")) {
+        if(uri.endsWith("login.jsp")
+        		|| uri.endsWith("signup.jsp")
+                || uri.endsWith("forget-password.jsp")
+                || uri.endsWith("reset-password.jsp")
+                || uri.contains("LoginController")
+                || uri.contains("SignupController")
+                || uri.contains("ForgetPasswordController")
+                || uri.contains("LogoutController")
+        		) {
 
             chain.doFilter(request, response);
             

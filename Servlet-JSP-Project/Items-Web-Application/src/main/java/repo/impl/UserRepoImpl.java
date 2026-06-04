@@ -41,37 +41,6 @@ public class UserRepoImpl implements UserRepo {
 		}
 	
 		
-		
-		
-//		try {
-//			connection= DBConfig.getConnection();
-//			String query = "INSERT INTO USERS (USERNAME, PASSWORD) VALUES (?,?)";
-//			preparedStatement = connection.prepareStatement(query);
-//			preparedStatement.setString(1, user.getUsername());
-//			preparedStatement.setString(2, user.getPassword());
-//			int rowsAffected = preparedStatement.executeUpdate();
-//			
-//			if (rowsAffected == 0) {
-//				throw new UserAlreadyExistsException();
-//			}
-//			return rowsAffected == 1;
-//			
-//		//} catch (NamingException | SQLException e) {
-//			
-//			//e.printStackTrace();
-//		}
-//	finally {
-//			if (Objects.nonNull(connection)) {
-//				try {
-//					connection.close();
-//					preparedStatement.close();
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-		
-		//return false;
 	}
 
 	@Override
@@ -112,6 +81,82 @@ public class UserRepoImpl implements UserRepo {
 		    }
 		}
 		
+		
+	}
+
+	@Override
+	public User findByUsername(String username) throws NamingException, SQLException {
+		
+		Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+	    
+	    try {
+
+	        connection = DBConfig.getConnection();
+
+	        String query ="SELECT * FROM USERS WHERE USERNAME = ?";
+
+	        preparedStatement =connection.prepareStatement(query);
+
+	        preparedStatement.setString(1, username);
+
+	        ResultSet resultSet =preparedStatement.executeQuery();
+
+	        User user = null;
+
+	        if (resultSet.next()) {
+
+	            user = new User(
+	                    resultSet.getInt("ID"),
+	                    resultSet.getString("USERNAME"),
+	                    resultSet.getString("PASSWORD")
+	            );
+	        }
+
+	        return user;
+
+	    } finally {
+
+	        if (connection != null) {
+	            connection.close();
+	        }
+
+	        if (preparedStatement != null) {
+	            preparedStatement.close();
+	        }
+	    }
+		
+	}
+
+	@Override
+	public void updatePassword(String username, String password) throws NamingException, SQLException {
+		
+		Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+
+	    try {
+
+	        connection = DBConfig.getConnection();
+
+	        String query ="UPDATE USERS SET PASSWORD = ? WHERE USERNAME = ?";
+
+	        preparedStatement =connection.prepareStatement(query);
+
+	        preparedStatement.setString(1, password);
+	        preparedStatement.setString(2, username);
+
+	        preparedStatement.executeUpdate();
+
+	    } finally {
+
+	        if (connection != null) {
+	            connection.close();
+	        }
+
+	        if (preparedStatement != null) {
+	            preparedStatement.close();
+	        }
+	    }
 		
 	}
 

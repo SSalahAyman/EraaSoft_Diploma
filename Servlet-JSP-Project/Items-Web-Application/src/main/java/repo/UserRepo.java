@@ -12,5 +12,9 @@ public interface UserRepo {
 	
 	User login(String userName , String password) throws NamingException , SQLException;
 	
+	User findByUsername(String username) throws NamingException , SQLException ;
+	
+	void updatePassword(String username , String password) throws NamingException , SQLException;
+	
 	
 }
