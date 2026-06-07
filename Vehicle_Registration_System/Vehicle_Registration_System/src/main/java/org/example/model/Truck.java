@@ -5,7 +5,7 @@ public class Truck extends Vehicle {
     private Double cargoCapacityTons;
 
     public Truck(String plateNumber, String ownerName, String vehicleType, Integer registrationYear, String status, Double cargoCapacityTons) {
-        super(plateNumber, ownerName, "Truck", registrationYear, status);
+        super(plateNumber, ownerName, vehicleType, registrationYear, status);
         this.cargoCapacityTons = cargoCapacityTons;
     }
 

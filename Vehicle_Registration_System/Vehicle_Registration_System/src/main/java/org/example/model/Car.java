@@ -5,7 +5,7 @@ public class Car extends Vehicle{
     private Integer numberOfDoors = 4;
 
     public Car(String plateNumber, String ownerName, String vehicleType, Integer registrationYear, String status, Integer numberOfDoors) {
-        super(plateNumber, ownerName, "Car", registrationYear, status);
+        super(plateNumber, ownerName, vehicleType, registrationYear, status);
         this.numberOfDoors = numberOfDoors;
     }
 

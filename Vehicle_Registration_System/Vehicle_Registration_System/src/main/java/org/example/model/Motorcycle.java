@@ -5,7 +5,7 @@ public class Motorcycle extends Vehicle{
     String engineType;
 
     public Motorcycle(String plateNumber, String ownerName, String vehicleType, Integer registrationYear, String status, String engineType) {
-        super(plateNumber, ownerName, "Motorcycle", registrationYear, status);
+        super(plateNumber, ownerName, vehicleType, registrationYear, status);
         this.engineType = engineType;
     }
 
