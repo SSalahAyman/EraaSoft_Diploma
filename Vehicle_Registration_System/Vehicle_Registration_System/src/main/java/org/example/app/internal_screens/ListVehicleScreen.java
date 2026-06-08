@@ -1,7 +1,9 @@
 package org.example.app.internal_screens;
 
+import org.example.model.Vehicle;
 import org.example.service.VehicleService;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ListVehicleScreen implements Screen{
@@ -16,6 +18,24 @@ public class ListVehicleScreen implements Screen{
 
     @Override
     public void showScreen() {
+
+        System.out.println("\n===== ALL REGISTERED VEHICLES =====");
+
+        List<Vehicle> vehicles = vehicleService.getAllVehicles();
+
+        if (vehicles.isEmpty()){
+
+            //System.out.println("No Vehicles Registered.");
+            // throw execption
+
+        } else {
+
+            vehicles.stream().forEach(vehicle -> System.out.println(vehicle));
+        }
+
+        System.out.println("\nPress Enter To Continue...");
+
+        scanner.nextLine();
 
     }
 }

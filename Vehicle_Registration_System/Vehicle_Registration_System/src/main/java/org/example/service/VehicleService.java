@@ -14,7 +14,9 @@ public interface VehicleService {
 
     void deleteVehicle(String plateNumber);
 
-    void updateOwner(String plateNumber,String newOwner);
+    void updateOwnerName(String plateNumber,String newOwner);
+
+
 
 
 }

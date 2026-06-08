@@ -4,6 +4,10 @@ import org.example.model.Vehicle;
 
 import java.util.List;
 
+// class it main objective is to [ save(),find(),delete(),findAll() ]
+
+// we don't do here method to [updateOwnerName] because there is no any interact with any of the three collections that defined in Repo , and just we setOwnerName with set method of model
+
 public interface VehicleRepo {
 
     List<Vehicle> findAll(); //
@@ -14,5 +18,5 @@ public interface VehicleRepo {
 
     void deleteVehicle(Vehicle vehicle); //
 
-    void updateOwner(String plateNumber,String newOwner);
+    //void updateOwnerByPlateNumber(Vehicle vehicle ,String newOwner);
 }

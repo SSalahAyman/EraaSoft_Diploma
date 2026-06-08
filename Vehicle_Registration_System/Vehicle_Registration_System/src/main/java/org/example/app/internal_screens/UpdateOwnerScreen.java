@@ -17,5 +17,23 @@ public class UpdateOwnerScreen implements Screen{
     @Override
     public void showScreen() {
 
+        System.out.println("\n===== UPDATE OWNER =====");
+
+        System.out.println("Plate Number: ");
+
+        String plateNumber = scanner.nextLine();
+
+        System.out.println("New Owner name: ");
+
+        String newOwner = scanner.nextLine();
+
+        vehicleService.updateOwnerName(plateNumber,newOwner);
+
+        System.out.println("\nOwner Updated Successfully.");
+
+        System.out.println("\nPress Enter To Continue...");
+
+        scanner.nextLine();
+
     }
 }

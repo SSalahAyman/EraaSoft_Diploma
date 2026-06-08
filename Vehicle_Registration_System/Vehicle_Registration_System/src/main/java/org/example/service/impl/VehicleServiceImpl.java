@@ -66,10 +66,11 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public void updateOwner(String plateNumber, String newOwner) {
+    public void updateOwnerName(String plateNumber, String newOwner) {
 
         Vehicle vehicle = searchByPlateNumber(plateNumber);
 
-        vehicleRepo.updateOwner(plateNumber,newOwner);
+        vehicle.setOwnerName(newOwner);
+
     }
 }

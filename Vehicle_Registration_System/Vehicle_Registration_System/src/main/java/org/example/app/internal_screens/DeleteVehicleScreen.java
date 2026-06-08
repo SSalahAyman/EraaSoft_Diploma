@@ -17,5 +17,19 @@ public class DeleteVehicleScreen implements Screen{
     @Override
     public void showScreen() {
 
+        System.out.println("\n===== DELETE VEHICLE =====");
+
+        System.out.println("Enter Plate Number: ");
+
+        String plateNumber = scanner.nextLine();
+
+        vehicleService.deleteVehicle(plateNumber);
+
+        System.out.println("\nVehicle Deleted Successfully.");
+
+        System.out.println("\nPress Enter To Continue...");
+
+        scanner.nextLine();
+
     }
 }
