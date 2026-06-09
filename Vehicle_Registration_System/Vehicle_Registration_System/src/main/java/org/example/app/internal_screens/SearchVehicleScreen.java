@@ -31,7 +31,6 @@ public class SearchVehicleScreen implements Screen{
         System.out.println(vehicle);
 
         System.out.println("\nPress Enter To Continue...");
-
         scanner.nextLine();
     }
 }

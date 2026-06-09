@@ -19,4 +19,10 @@ public interface VehicleRepo {
     void deleteVehicle(Vehicle vehicle); //
 
     //void updateOwnerByPlateNumber(Vehicle vehicle ,String newOwner);
+
+    List<Vehicle> filterByType(String vehicleType);
+
+    List<Vehicle> findByOwnerName(String ownerName);
+
+    List<Vehicle> findExpiredRegistrations(int currentYear);
 }

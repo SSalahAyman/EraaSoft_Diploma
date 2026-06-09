@@ -32,7 +32,6 @@ public class UpdateOwnerScreen implements Screen{
         System.out.println("\nOwner Updated Successfully.");
 
         System.out.println("\nPress Enter To Continue...");
-
         scanner.nextLine();
 
     }

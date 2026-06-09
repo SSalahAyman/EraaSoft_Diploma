@@ -25,16 +25,16 @@ public class ListVehicleScreen implements Screen{
 
         if (vehicles.isEmpty()){
 
-            //System.out.println("No Vehicles Registered.");
+            System.out.println("No Vehicles Registered.");
+
             // throw execption
 
         } else {
 
-            vehicles.stream().forEach(vehicle -> System.out.println(vehicle));
+            vehicles.stream().forEach(System.out::println);
         }
 
         System.out.println("\nPress Enter To Continue...");
-
         scanner.nextLine();
 
     }

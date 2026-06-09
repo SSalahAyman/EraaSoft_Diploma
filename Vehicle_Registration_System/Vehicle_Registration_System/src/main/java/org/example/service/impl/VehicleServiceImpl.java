@@ -5,6 +5,8 @@ import org.example.exception.VehicleNotFoundException;
 import org.example.model.Vehicle;
 import org.example.repo.VehicleRepo;
 import org.example.service.VehicleService;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -73,4 +75,34 @@ public class VehicleServiceImpl implements VehicleService {
         vehicle.setOwnerName(newOwner);
 
     }
+
+    @Override
+    public List<Vehicle> filterByType(String vehicleType) {
+
+        List<Vehicle> filteredVehicles = vehicleRepo.filterByType(vehicleType);
+
+        return filteredVehicles;
+
+    }
+
+    @Override
+    public List<Vehicle> getVehiclesByOwner(String ownerName) {
+
+        List<Vehicle> vehicles = vehicleRepo.findByOwnerName(ownerName);
+
+        return vehicles;
+    }
+
+    @Override
+    public List<Vehicle> getExpiredRegistrations() {
+
+        int currentYear = LocalDate.now().getYear();
+
+        List<Vehicle> expiredRegistrations = vehicleRepo.findExpiredRegistrations(currentYear);
+
+        return expiredRegistrations;
+
+    }
+
+
 }

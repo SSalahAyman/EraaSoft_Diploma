@@ -28,7 +28,6 @@ public class DeleteVehicleScreen implements Screen{
         System.out.println("\nVehicle Deleted Successfully.");
 
         System.out.println("\nPress Enter To Continue...");
-
         scanner.nextLine();
 
     }

@@ -16,7 +16,11 @@ public interface VehicleService {
 
     void updateOwnerName(String plateNumber,String newOwner);
 
+    List<Vehicle> filterByType(String vehicleType);
 
+    List<Vehicle> getVehiclesByOwner (String ownerName);
+
+    List<Vehicle> getExpiredRegistrations();
 
 
 }
