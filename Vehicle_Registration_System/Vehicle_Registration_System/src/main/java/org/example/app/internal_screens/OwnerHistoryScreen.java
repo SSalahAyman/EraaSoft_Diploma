@@ -25,16 +25,7 @@ public class OwnerHistoryScreen implements Screen{
 
         List<Vehicle> vehicles = vehicleService.getVehiclesByOwner(ownerName);
 
-        if(vehicles.isEmpty()){
-
-            System.out.println("No vehicles found.");
-            // throw exception
-
-        }else{
-
-            vehicles.stream().forEach(System.out::println);
-
-        }
+        vehicles.stream().forEach(System.out::println);
 
         System.out.println("\nPress Enter To Continue...");
         scanner.nextLine();

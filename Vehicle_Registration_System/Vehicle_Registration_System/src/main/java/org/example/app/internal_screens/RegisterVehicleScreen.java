@@ -22,13 +22,14 @@ public class RegisterVehicleScreen implements Screen {
         System.out.println("\n==== Register Vehicle ====\n");
 
         System.out.println("Enter Plate Number : ");
-        String plateNumber = scanner.next();
+        String plateNumber = scanner.nextLine();
 
         System.out.println("Enter the Owner Name : ");
-        String ownerName = scanner.next();
+        String ownerName = scanner.nextLine();
 
         System.out.println("Enter the registrationYear : ");
         int year = scanner.nextInt();
+        scanner.nextLine();  // تنظيف الـ Buffer
 
         System.out.println("""
             1. Car
@@ -37,6 +38,7 @@ public class RegisterVehicleScreen implements Screen {
             """);
 
         int typeChoice = scanner.nextInt();
+        scanner.nextLine(); // تنظيف الـ Buffer
 
        Vehicle vehicle = VehicleFactory.createVehicle(typeChoice,plateNumber,ownerName,year,"ACTIVE",scanner);
 

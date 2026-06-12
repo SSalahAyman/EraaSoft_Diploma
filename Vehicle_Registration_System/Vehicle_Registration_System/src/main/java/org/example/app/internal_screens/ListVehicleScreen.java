@@ -17,22 +17,13 @@ public class ListVehicleScreen implements Screen{
     }
 
     @Override
-    public void showScreen() {
+    public void showScreen()  {
 
         System.out.println("\n===== ALL REGISTERED VEHICLES =====");
 
         List<Vehicle> vehicles = vehicleService.getAllVehicles();
 
-        if (vehicles.isEmpty()){
-
-            System.out.println("No Vehicles Registered.");
-
-            // throw execption
-
-        } else {
-
             vehicles.stream().forEach(System.out::println);
-        }
 
         System.out.println("\nPress Enter To Continue...");
         scanner.nextLine();

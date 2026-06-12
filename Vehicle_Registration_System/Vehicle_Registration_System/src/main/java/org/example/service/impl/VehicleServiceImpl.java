@@ -1,10 +1,10 @@
 package org.example.service.impl;
 
-import org.example.exception.DuplicatePlateException;
-import org.example.exception.VehicleNotFoundException;
+import org.example.exception.*;
 import org.example.model.Vehicle;
 import org.example.repo.VehicleRepo;
 import org.example.service.VehicleService;
+import org.example.util.InputValidator;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,6 +23,12 @@ public class VehicleServiceImpl implements VehicleService {
 
         List<Vehicle> vehicles = vehicleRepo.findAll();
 
+        if(Objects.isNull(vehicles)){
+
+            throw new EmptyVehicleListException();
+
+        }
+
         return vehicles;
 
     }
@@ -31,7 +37,7 @@ public class VehicleServiceImpl implements VehicleService {
     public void RegisterVehicle(Vehicle vehicle) {
 
         // validation
-
+        InputValidator.validateNewVehicle(vehicle);
 
         // check on the inputPlate if there is already registered with existing vehicle or not
         Vehicle existingVehicle  = vehicleRepo.findByPlateNumber(vehicle.getPlateNumber());
@@ -51,7 +57,7 @@ public class VehicleServiceImpl implements VehicleService {
 
         if(Objects.isNull(vehicle)){
 
-            throw new VehicleNotFoundException();
+            throw new VehicleNotFoundException(plateNumber);
 
         }
 
@@ -81,6 +87,12 @@ public class VehicleServiceImpl implements VehicleService {
 
         List<Vehicle> filteredVehicles = vehicleRepo.filterByType(vehicleType);
 
+        if (Objects.isNull(filteredVehicles)) {
+
+            throw new VehicleTypeNotFoundException(vehicleType);
+
+        }
+
         return filteredVehicles;
 
     }
@@ -89,6 +101,12 @@ public class VehicleServiceImpl implements VehicleService {
     public List<Vehicle> getVehiclesByOwner(String ownerName) {
 
         List<Vehicle> vehicles = vehicleRepo.findByOwnerName(ownerName);
+
+        if (Objects.isNull(vehicles)) {
+
+            throw new OwnerNotFoundException(ownerName);
+
+        }
 
         return vehicles;
     }
@@ -99,6 +117,12 @@ public class VehicleServiceImpl implements VehicleService {
         int currentYear = LocalDate.now().getYear();
 
         List<Vehicle> expiredRegistrations = vehicleRepo.findExpiredRegistrations(currentYear);
+
+        if (Objects.isNull(expiredRegistrations)){
+
+            throw new NoExpiredRegistrationsException();
+
+        }
 
         return expiredRegistrations;
 

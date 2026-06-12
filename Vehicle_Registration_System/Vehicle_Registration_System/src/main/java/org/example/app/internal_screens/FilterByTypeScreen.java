@@ -56,21 +56,11 @@ public class FilterByTypeScreen implements Screen{
 
         List<Vehicle> filteredVehicles = vehicleService.filterByType(vehicleType);
 
-        if(filteredVehicles.isEmpty()){
-
-            System.out.println(
-                    "\nNo " + vehicleType + " vehicles found.");
-            // throw exception
-
-        } else {
-
             System.out.println(
                     "\n===== " + vehicleType.toUpperCase()
                             + " VEHICLES =====");
 
             filteredVehicles.stream().forEach(System.out::println);
-
-        }
 
         System.out.println("\nPress Enter To Continue...");
         scanner.nextLine();

@@ -9,6 +9,8 @@ import org.example.service.impl.VehicleServiceImpl;
 import java.util.Scanner;
 
 public class Main {
+
+
     public static void main(String[] args) {
 
         // create object from VehicleRepository
@@ -23,6 +25,23 @@ public class Main {
 
         // then , call the startApplication method from MainScreenController to startApplication & show the MainMenu
         applicationController.StartApplication();
+
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.print("Age: ");
+//        int age = scanner.nextInt();
+//        scanner.nextLine();
+//
+//        System.out.println("Full Name: ");
+//        String fullName = scanner.nextLine();
+//
+//        System.out.println("Salary: ");
+//        double salary = scanner.nextDouble();
+//        // scanner.nextLine();
+//
+//        System.out.println("Address: ");
+//        String address = scanner.nextLine();
+//
+//        System.out.print(fullName);
 
     }
 }

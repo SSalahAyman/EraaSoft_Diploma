@@ -44,6 +44,7 @@ public class ApplicationController {
             showMenu();
 
             int choice = scanner.nextInt();
+            scanner.nextLine();  // تنظيف الـ Buffer
 
             switch(choice) {
 
