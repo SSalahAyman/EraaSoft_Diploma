@@ -3,7 +3,9 @@ package org.example;
 import org.example.app.ApplicationController;
 import org.example.repo.VehicleRepo;
 import org.example.repo.impl.VehicleRepoImpl;
+import org.example.service.StatisticsService;
 import org.example.service.VehicleService;
+import org.example.service.impl.StatisticsServiceImpl;
 import org.example.service.impl.VehicleServiceImpl;
 
 import java.util.Scanner;
@@ -19,9 +21,12 @@ public class Main {
         // create object from VehicleService and put the object of VehicleRepository to it in his constructor
         VehicleService vehicleService = new VehicleServiceImpl(vehicleRepo);
 
-        // create new Scanner & object from MainScreenController and put the scanner object & VehicleService to it in his constructor
+        // create object from StatisticsService and put the object of VehicleRepository to it in his constructor
+        StatisticsService statisticsService = new StatisticsServiceImpl(vehicleRepo);
+
+        // create new Scanner & object from MainScreenController and put the scanner object & VehicleService & statisticsService to it in his constructor
         Scanner scanner = new Scanner(System.in);
-        ApplicationController applicationController = new ApplicationController(vehicleService,scanner);
+        ApplicationController applicationController = new ApplicationController(vehicleService,statisticsService,scanner);
 
         // then , call the startApplication method from MainScreenController to startApplication & show the MainMenu
         applicationController.StartApplication();

@@ -2,6 +2,7 @@ package org.example.app;
 
 import org.example.app.internal_screens.*;
 import org.example.exception.GlobalExceptionHandler;
+import org.example.service.StatisticsService;
 import org.example.service.VehicleService;
 
 import java.util.InputMismatchException;
@@ -14,7 +15,8 @@ import java.util.Scanner;
 public class ApplicationController {
 
      private VehicleService vehicleService;
-     private Scanner scanner;
+     private StatisticsService statisticsService;
+    private Scanner scanner;
      private RegisterVehicleScreen registerScreen;
      private SearchVehicleScreen searchScreen;
      private UpdateOwnerScreen updateOwnerScreen;
@@ -25,8 +27,9 @@ public class ApplicationController {
      private ExpiredRegistrationScreen expiredScreen;
      private StatisticsScreen statisticsScreen;
 
-     public ApplicationController(VehicleService vehicleService,Scanner scanner) {
+     public ApplicationController(VehicleService vehicleService,StatisticsService statisticsService , Scanner scanner) {
          this.vehicleService = vehicleService;
+         this.statisticsService = statisticsService;
          this.scanner = scanner;
          registerScreen = new RegisterVehicleScreen(vehicleService,scanner);
          searchScreen = new SearchVehicleScreen(vehicleService,scanner);
@@ -36,7 +39,7 @@ public class ApplicationController {
          filterScreen = new FilterByTypeScreen(vehicleService,scanner);
          ownerHistoryScreen = new OwnerHistoryScreen(vehicleService,scanner);
          expiredScreen = new ExpiredRegistrationScreen(vehicleService,scanner);
-         statisticsScreen = new StatisticsScreen(vehicleService,scanner);
+         statisticsScreen = new StatisticsScreen(statisticsService,scanner);
      }
 
     public void StartApplication() {
