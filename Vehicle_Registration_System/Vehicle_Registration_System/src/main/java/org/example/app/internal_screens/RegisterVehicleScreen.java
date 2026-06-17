@@ -1,7 +1,10 @@
 package org.example.app.internal_screens;
 
+import org.example.exception.GlobalExceptionHandler;
+import org.example.exception.MissingMandatoryFieldException;
 import org.example.model.Vehicle;
 import org.example.service.VehicleService;
+import org.example.util.InputValidator;
 import org.example.util.VehicleFactory;
 
 import java.util.Scanner;
@@ -21,24 +24,85 @@ public class RegisterVehicleScreen implements Screen {
 
         System.out.println("\n==== Register Vehicle ====\n");
 
-        System.out.println("Enter Plate Number : ");
-        String plateNumber = scanner.nextLine();
+        // read plateNumber
+        String plateNumber;
+        while (true) {
 
-        System.out.println("Enter the Owner Name : ");
-        String ownerName = scanner.nextLine();
+            try {
 
-        System.out.println("Enter the registrationYear : ");
-        int year = scanner.nextInt();
-        scanner.nextLine();  // تنظيف الـ Buffer
+                System.out.print("Enter Plate Number : ");
+                plateNumber = scanner.nextLine();
 
-        System.out.println("""
-            1. Car
-            2. Truck
-            3. Motorcycle
-            """);
+                InputValidator.validatePlateNumber(plateNumber);
 
-        int typeChoice = scanner.nextInt();
-        scanner.nextLine(); // تنظيف الـ Buffer
+                break;
+            } catch (Exception e) {
+
+                GlobalExceptionHandler.handle(e);
+            }
+        }
+
+        // read OwnerName
+        String ownerName;
+        while (true) {
+
+            try{
+
+                System.out.print("Enter the Owner Name : ");
+                ownerName = scanner.nextLine();
+
+                InputValidator.validateOwnerName(ownerName);
+                break;
+            } catch (Exception e) {
+
+                GlobalExceptionHandler.handle(e);
+
+            }
+        }
+
+        // read RegistrationYear
+        Integer year;
+        while (true) {
+
+            try {
+
+                System.out.print("Enter the registrationYear : ");
+                String input = scanner.nextLine();
+                year =  input.trim().isEmpty() ? null : Integer.parseInt(input);
+
+                InputValidator.validateRegisterYear(year);
+
+                break;
+            } catch (Exception e) {
+
+                GlobalExceptionHandler.handle(e);
+
+            }
+        }
+
+        // read VehicleType
+        Integer typeChoice;
+        while (true){
+
+            try {
+
+                System.out.print("""
+                    1. Car
+                    2. Truck
+                    3. Motorcycle
+                    """);
+                String inputChoice = scanner.nextLine();
+                typeChoice = inputChoice.trim().isEmpty() ? null : Integer.parseInt(inputChoice);
+
+                InputValidator.validateVehicleTypeChoice(typeChoice);
+
+                break;
+            }catch (Exception e) {
+
+                GlobalExceptionHandler.handle(e);
+
+            }
+        }
 
        Vehicle vehicle = VehicleFactory.createVehicle(typeChoice,plateNumber,ownerName,year,"ACTIVE",scanner);
 
@@ -47,4 +111,44 @@ public class RegisterVehicleScreen implements Screen {
         System.out.println("Vehicle Registered Successfully");
 
     }
+
+    private String readInput(String message) {
+
+        while (true) {
+
+            try {
+
+                System.out.print(message);
+                return scanner.nextLine();
+
+            } catch (Exception e) {
+
+                GlobalExceptionHandler.handle(e);
+
+            }
+        }
+    }
+
+    private Integer readInteger(String message) {
+
+        while (true) {
+
+            try {
+
+                System.out.print(message);
+
+                String input = scanner.nextLine();
+
+                return input.trim().isEmpty()
+                        ? null
+                        : Integer.parseInt(input);
+
+            } catch (Exception e) {
+
+                GlobalExceptionHandler.handle(e);
+
+            }
+        }
+    }
+
 }

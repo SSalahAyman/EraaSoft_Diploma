@@ -1,46 +1,23 @@
 package org.example.exception;
 
+import java.util.InputMismatchException;
+
 public class GlobalExceptionHandler {
 
     public static void handle(Exception e) {
 
-        if (e instanceof DuplicatePlateException){
+        if (e instanceof InputMismatchException) {
 
-            System.out.println("\nERROR : " + e.getMessage());
+            System.out.println("\nERROR : Invalid input type. Please enter a numeric value.");
 
-        } else if (e instanceof VehicleNotFoundException) {
+        } else if (e instanceof NumberFormatException) {
 
-            System.out.println("\nERROR : " + e.getMessage());
-
-        } else if (e instanceof EmptyVehicleListException) {
-
-            System.out.println("\nERROR : " + e.getMessage());
-
-        } else if (e instanceof InvalidInputException) {
-
-            System.out.println("\nERROR : " + e.getMessage());
-
-        } else if (e instanceof MissingMandatoryFieldException) {
-
-            System.out.println("\nERROR : " + e.getMessage());
-
-        } else if (e instanceof NoExpiredRegistrationsException) {
-
-            System.out.println("\nERROR : " + e.getMessage());
-
-        } else if (e instanceof OwnerNotFoundException) {
-
-            System.out.println("\nERROR : " + e.getMessage());
-
-        } else if (e instanceof VehicleTypeNotFoundException) {
-
-            System.out.println("\nERROR : " + e.getMessage());
+            System.out.println("\nERROR : Invalid input Format. The value must be a number.");
 
         } else {
 
-            System.out.println("\nUnexpected Error : " + e.getMessage());
-            
+            System.out.println("\nERROR : " + e.getMessage());
+
         }
     }
-
 }

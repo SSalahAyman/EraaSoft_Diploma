@@ -9,12 +9,12 @@ public abstract class Vehicle {
 
     private String vehicleType;
 
-    private int registrationYear;
+    private Integer registrationYear;
 
     private String status;
 
     // Declare the constructor that can any subClass of this class uses it
-    public Vehicle(String plateNumber, String ownerName, String vehicleType, int registrationYear, String status) {
+    public Vehicle(String plateNumber, String ownerName, String vehicleType, Integer registrationYear, String status) {
         this.plateNumber = plateNumber;
         this.ownerName = ownerName;
         this.vehicleType = vehicleType;
@@ -41,7 +41,7 @@ public abstract class Vehicle {
         return vehicleType;
     }
 
-    public int getRegistrationYear() {
+    public Integer getRegistrationYear() {
         return registrationYear;
     }
 

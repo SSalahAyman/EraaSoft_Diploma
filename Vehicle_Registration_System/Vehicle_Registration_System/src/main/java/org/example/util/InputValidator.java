@@ -5,8 +5,10 @@ import org.example.exception.MissingMandatoryFieldException;
 import org.example.model.Vehicle;
 
 import java.time.LocalDate;
+import java.util.Scanner;
 
 public class InputValidator {
+
 
     public static void validateNewVehicle (Vehicle vehicle) {
 
@@ -71,7 +73,29 @@ public class InputValidator {
         }
     }
 
-    public static void validateRegisterYear(int registrationYear) {
+    public static void validateVehicleTypeChoice(Integer typeChoice) {
+
+        if (typeChoice == null) {
+
+            throw new MissingMandatoryFieldException();
+
+        }
+
+        if (typeChoice < 1 || typeChoice > 3) {
+
+            throw new InvalidInputException(
+                    "Invalid vehicle type. Choose 1, 2 or 3.");
+
+        }
+    }
+
+    public static void validateRegisterYear(Integer registrationYear) {
+
+        if (registrationYear == null) {
+
+            throw new MissingMandatoryFieldException();
+
+        }
 
         int currentYear = LocalDate.now().getYear();
 
@@ -80,5 +104,35 @@ public class InputValidator {
             throw new InvalidInputException("Year must be between 1990 and " + currentYear);
 
         }
+    }
+
+    public static void validateNumberOfDoors(int doors) {
+
+        if (doors < 0 || doors >=6) {
+
+            throw new InvalidInputException("ERROR: Doors must be between 1 and 6.");
+
+        }
+
+    }
+
+    public static void validateCargoCapacity(double cargoCapacity) {
+
+        if (cargoCapacity < 0 ) {
+
+            throw new InvalidInputException("ERROR: Cargo capacity must be greater than 0.");
+
+        }
+
+    }
+
+    public static void validateEngineType(String engineType) {
+
+        if (engineType.trim().isEmpty()) {
+
+            throw new MissingMandatoryFieldException();
+
+        }
+
     }
 }

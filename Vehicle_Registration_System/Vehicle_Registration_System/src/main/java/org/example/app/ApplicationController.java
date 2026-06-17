@@ -1,8 +1,10 @@
 package org.example.app;
 
 import org.example.app.internal_screens.*;
+import org.example.exception.GlobalExceptionHandler;
 import org.example.service.VehicleService;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /*
@@ -37,58 +39,79 @@ public class ApplicationController {
          statisticsScreen = new StatisticsScreen(vehicleService,scanner);
      }
 
-    public void StartApplication(){
+    public void StartApplication() {
 
-        while (true){
 
-            showMenu();
+        while (true) {
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();  // تنظيف الـ Buffer
+            try {
 
-            switch(choice) {
+                showMenu();
 
-                case 1 :
-                    registerScreen.showScreen();
-                    break;
+                int choice = scanner.nextInt();
+                scanner.nextLine(); // clear buffer
 
-                case 2 :
-                    searchScreen.showScreen();
-                    break;
+                switch (choice) {
 
-                case 3 :
-                    updateOwnerScreen.showScreen();
-                    break;
+                    case 1:
+                        registerScreen.showScreen();
+                        break;
 
-                case 4 :
-                    deleteScreen.showScreen();
-                    break;
+                    case 2:
+                        searchScreen.showScreen();
+                        break;
 
-                case 5 :
-                    listScreen.showScreen();
-                    break;
+                    case 3:
+                        updateOwnerScreen.showScreen();
+                        break;
 
-                case 6 :
-                    filterScreen.showScreen();
-                    break;
+                    case 4:
+                        deleteScreen.showScreen();
+                        break;
 
-                case 7 :
-                    ownerHistoryScreen.showScreen();
-                    break;
+                    case 5:
+                        listScreen.showScreen();
+                        break;
 
-                case 8 :
-                    expiredScreen.showScreen();
-                    break;
+                    case 6:
+                        filterScreen.showScreen();
+                        break;
 
-                case 9 :
-                    statisticsScreen.showScreen();
-                    break;
+                    case 7:
+                        ownerHistoryScreen.showScreen();
+                        break;
 
-                case 0 :
-                    return;
+                    case 8:
+                        expiredScreen.showScreen();
+                        break;
+
+                    case 9:
+                        statisticsScreen.showScreen();
+                        break;
+
+                    case 0:
+                        return;
+
+                    default:
+                        System.out.println("Invalid Choice!");
+                }
+
+            } catch (Exception e) {
+
+                GlobalExceptionHandler.handle(e);
+
+                // Clear the Scanner buffer only when InputMismatchException occurs.
+                // In this case, the invalid input entered by the user remains inside the buffer because methods like nextInt() or nextDouble() cannot consume it.
+                // If we don't remove that invalid value, the same exception will be thrown again
+                // in the next iteration, causing an infinite loop.
+                //
+                // For other exceptions (e.g. VehicleNotFoundException), the input has already been consumed and the buffer is empty.
+                // Calling nextLine() in those cases would unnecessarily wait for additional user input and make the program appear frozen.
+                if (e instanceof InputMismatchException) {
+                    // Clear invalid input from Scanner buffer
+                    scanner.nextLine();
+                }
             }
-
-
         }
     }
 
