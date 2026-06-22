@@ -3,7 +3,7 @@ package service.impl;
 import org.springframework.stereotype.Component;
 import service.UserService;
 
-@Component("mangerService")
+
 public class MangerServiceImpl implements UserService {
 
     @Override

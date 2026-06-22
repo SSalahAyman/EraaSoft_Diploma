@@ -22,7 +22,7 @@ public class Main {
         manger1.update("Ahmed");
 
         System.out.println();
-        //--------------------------------(get two bean with "AnnotationConfigApplicationContext" that is used when we config spring container with no XML)-------------------------//
+        //--------------------------------(get two bean with "AnnotationConfigApplicationContext" that is used when we config spring container with java config)-------------------------//
         ApplicationContext context2 = new AnnotationConfigApplicationContext(AppConfig.class);
 
         UserService person2 = context2.getBean("personService" , UserService.class);

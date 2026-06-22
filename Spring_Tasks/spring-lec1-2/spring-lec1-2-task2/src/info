@@ -1,0 +1,24 @@
+create interface UserService with function
+
+void save(String name);
+
+create class PersonServiceImpl that implement UserService
+
+create interface AccountService with function
+
+void getSavePerson(String name);
+
+create class AccountServiceImpl that implement AccountService and will use PersonServiceImpl to call save function on it
+
+create Container on your project
+
+create bean of PersonServiceImpl
+
+create bean of AccountServiceImpl
+
+call bean AccountServiceImpl on main class and call getSavePerson function
+
+----------------------------------------------------------------------------
+apply Container xml
+
+apply container java no xml
