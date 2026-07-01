@@ -1,0 +1,89 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+        <!--
+        ===============================================================================
+        [Hibernate Configuration File]
+        **Purpose:
+        This file contains all the settings required for Hibernate to work.
+
+        It tells Hibernate:
+            • Which database to connect to.
+            • Which JDBC driver to use.
+            • Authentication information.
+            • Which SQL dialect to generate.
+            • Which entity classes are managed.
+            • Additional Hibernate settings.
+
+        Hibernate reads this file when:
+
+        new Configuration().configure("hibernate.cfg.xml");
+
+        is executed.
+
+        Usually this file is placed inside:
+        src/main/resources
+        ===============================================================================
+         -->
+        
+<hibernate-configuration>
+
+        <!-- (this is tag xml is main feature to define any configuration of the database)
+       ===========================================================================
+       Session Factory
+
+       This section contains all settings needed to build
+       the SessionFactory object.
+
+       Think of SessionFactory as the main factory responsible
+       for creating Sessions.
+       ===========================================================================
+       -->
+    <session-factory>
+        <!-- ==============================================================
+             Database Connection Settings
+             ============================================================== -->
+
+        <!-- JDBC Driver Class -->
+        <property name="connection.driver_class">oracle.jdbc.OracleDriver</property>
+        <!-- Database URL -->
+        <property name="connection.url">jdbc:oracle:thin:@//localhost:1521/orclpdb</property>
+        <!-- Database Username -->
+        <property name="connection.username">hr</property>
+        <!-- Database Password -->
+        <property name="connection.password">hr</property>
+
+        <!-- ==============================================================
+             Current Session Context
+             - this property we add it also when we need from first get currentSession not OpeningSession
+             ============================================================== -->
+        <!--
+        Determines how Hibernate manages the current Session.
+
+        "thread" means:
+        One Session is associated with each application thread.
+
+        This allows us to use:
+        sessionFactory.getCurrentSession();
+        -->
+        <property name="current_session_context_class">thread</property>
+
+
+		<!-- show SQL query [when enable this property shows for you in console the current SQL query or each SQL query that hibernate execute it]-->
+         <property name="show_sql">true</property>
+
+        <property name="hbm2ddl.auto">create</property>
+
+         <!-- create -->
+		<!-- update -->
+		<!-- create-drop -->
+        <!-- <property name="hbm2ddl.auto">update</property>  -->
+
+        <mapping class="org.example.entity.Teacher"/>
+
+
+
+    </session-factory>
+
+</hibernate-configuration>

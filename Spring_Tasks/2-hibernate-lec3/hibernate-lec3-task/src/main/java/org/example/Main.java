@@ -1,17 +1,40 @@
 package org.example;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
+import org.example.entity.Teacher;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        // Load Hibernate configuration
+        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
+
+        // Build SessionFactory
+        SessionFactory sessionFactory = configuration.buildSessionFactory();
+
+        // get current session
+        Session session = sessionFactory.getCurrentSession();
+
+        // Begin Transaction
+        Transaction transaction = session.beginTransaction();
+
+        // Create Teacher object
+        Teacher teacher = new Teacher("Salah", 18, "Cairo");
+
+        // Save object into database
+        session.save(teacher);
+
+        // Commit Transaction
+        transaction.commit();
+
+        // Close resources
+        session.close();
+        sessionFactory.close();
+
+
     }
-}
+    }
